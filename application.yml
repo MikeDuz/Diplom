@@ -1,12 +1,18 @@
 spring.datasource.url: jdbc:mysql://localhost:3306/diplom?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
 spring.datasource.username: root
 spring.datasource.password: test4321
+
 spring.jpa.show-sql: true
 spring:
+  jpa:
+    properties:
+      hibernate:
+        validator:
+          apply_to_ddl: false
   flyway:
-  url: jdbc:mysql://localhost:3306/db_migrate?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
   username: root
-  spring.datasource.password: test4321
+  password: test4321
+  schemas: db_migrate
   enabled: false
   validate-on-migrate: true
 spring.jpa:

@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -18,18 +19,19 @@ public class Posts {
     @Column(nullable = false)
     private boolean isActive;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition="enum('NEW','ACCEPTED','DECLINED')")
+    @Column(nullable = false, columnDefinition="enum")
     private ModerationStatus moderationStatus;
-    private int moderatorId;
-    @Column(nullable = false)
-    private int userId;
-    @Column(nullable = false)
+    @ManyToOne
+    private Users moderatorId;
+    @ManyToOne
+    private Users userId;
+    @NotNull
     private Date time;
-    @Column(nullable = false)
+    @NotNull
     private String title;
-    @Column(nullable = false)
+    @NotNull
     private String text;
-    @Column(nullable = false)
+    @NotNull
     private int viewCount;
 
 }

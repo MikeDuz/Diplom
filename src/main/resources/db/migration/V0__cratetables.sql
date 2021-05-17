@@ -1,0 +1,7 @@
+create table captcha_codes (id integer not null, code tinyint not null, secret_code tinyint not null, time datetime not null, primary key (id)) engine=InnoDB;
+create table global_settings (id integer not null, code enum('MULTIUSER_MODE','POST_PREMODERATION','STATISTICS_IN_PUBLIC') not null, name varchar(255) not null, value enum('YES','NO') not null, primary key (id)) engine=InnoDB;
+create table posts (id integer not null, is_active bit not null, moderation_status enum('NEW','ACCEPTED','DECLINED') not null, moderator_id integer not null, text varchar(255) not null, time datetime not null, title varchar(255) not null, user_id integer not null, view_count integer not null, primary key (id)) engine=InnoDB;
+create table posts_comments (id integer not null, parent_id integer not null, post_id integer not null, text varchar(255) not null, time datetime not null, user_id integer not null, primary key (id)) engine=InnoDB;
+create table posts_votes (id integer not null, post_id integer not null, time datetime not null, user_id integer not null, value integer not null, primary key (id)) engine=InnoDB;
+create table tag2post (id integer not null, post_id integer not null, tag_id integer not null, primary key (id)) engine=InnoDB;
+create table tags (id integer not null, name varchar(255) not null, primary key (id)) engine=InnoDB

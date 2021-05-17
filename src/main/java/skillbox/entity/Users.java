@@ -6,6 +6,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -17,15 +18,15 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(nullable = false)
+    @NotNull
     private boolean idModerator;
-    @Column(nullable = false)
+    @NotNull
     private Date regTime;
-    @Column(nullable = false)
+    @NotNull
     private String name;
-    @Column(nullable = false)
+    @NotNull
     private String email;
-    @Column(nullable = false)
+    @NotNull
     private String password;
     private String code;
     private String photo;

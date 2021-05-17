@@ -15,10 +15,12 @@ public class PostVotes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(nullable = false)
-    private int userId;
-    @Column(nullable = false)
-    private int postId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
+    private Users userId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
+    private Posts postId;
     @Column(nullable = false)
     private Date time;
     @Column(nullable = false)

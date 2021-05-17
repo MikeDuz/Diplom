@@ -15,11 +15,15 @@ public class PostComments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int parentId;
-    @Column(nullable = false)
-    private int postId;
-    @Column(nullable = false)
-    private int userId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    private PostComments parentId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private Posts postId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private Users userId;
     @Column(nullable = false)
     private Date time;
     @Column(nullable = false)
