@@ -21,9 +21,13 @@ public class Posts {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition="enum")
     private ModerationStatus moderationStatus;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "moderator_id", referencedColumnName = "id")
+    @NotNull
     private Users moderatorId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NotNull
     private Users userId;
     @NotNull
     private Date time;

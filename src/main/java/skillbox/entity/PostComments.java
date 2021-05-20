@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -16,16 +17,19 @@ public class PostComments {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @NotNull
     private PostComments parentId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @NotNull
     private Posts postId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NotNull
     private Users userId;
-    @Column(nullable = false)
+    @NotNull
     private Date time;
-    @Column(nullable = false)
+    @NotNull
     private String text;
 }

@@ -10,15 +10,12 @@ spring:
         validator:
           apply_to_ddl: false
   flyway:
-  username: root
-  password: test4321
-  schemas: db_migrate
-  enabled: false
+  enabled: true
   validate-on-migrate: true
 spring.jpa:
   hibernate:
     connection:
       charset: utf8
       useUnicode: true
-    ddl-auto: create
+    ddl-auto: none
   properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
