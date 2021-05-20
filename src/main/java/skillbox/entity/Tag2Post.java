@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,12 +14,8 @@ public class Tag2Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    @NotNull
-    private Posts postId;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "tags_id", referencedColumnName = "id")
-    @NotNull
-    private Tags tagId;
+    @Column(nullable = false)
+    private int postId;
+    @Column(nullable = false)
+    private int tagId;
 }

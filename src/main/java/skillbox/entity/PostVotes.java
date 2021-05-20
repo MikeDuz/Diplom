@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -17,15 +16,13 @@ public class PostVotes {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @NotNull
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private Users userId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    @NotNull
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private Posts postId;
-    @NotNull
+    @Column(nullable = false)
     private Date time;
-    @NotNull
+    @Column(nullable = false)
     private int value;
 }
