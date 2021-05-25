@@ -22,3 +22,12 @@ spring.jpa:
       useUnicode: true
     ddl-auto: update
   properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+blog:
+  title: WD pub
+  subtitle: weeb disign pub
+  telegram: MikeVS1
+  email: mikevs63@gmail.com
+  copyright: Mikhail Smirniskiy
+  copyrightFrom: 2021
+
