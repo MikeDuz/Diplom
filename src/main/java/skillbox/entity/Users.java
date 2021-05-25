@@ -1,8 +1,6 @@
 package skillbox.entity;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -12,6 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class Users {
@@ -19,7 +18,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
-    private boolean idModerator;
+    private boolean isModerator;
     @NotNull
     private Date regTime;
     @NotNull

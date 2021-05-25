@@ -29,17 +29,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="08.05.2021 HTML troubles">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__insertGlobalSettings.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/CaptchaCodes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/CaptchaCodes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostComments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostComments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tag2Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tag2Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/CaptchaCodes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/CaptchaCodes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/GlobalSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/GlobalSettings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/PostComments.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/PostComments.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/PostVotes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/PostVotes.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/Posts.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/Posts.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/Tag2Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/Tag2Post.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/Tags.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/Tags.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/skillbox/entity/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/skillbox/entity/Users.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,22 +180,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="505" y="288" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1366.728@0.0.1366.728" timestamp="1620301985312" />
-    <state width="1323" height="251" key="GridCell.Tab.0.bottom" timestamp="1621522574395">
+    <state x="462" y="119" key="FileChooserDialogImpl" timestamp="1621676841242">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="251" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621522574395" />
-    <state width="1323" height="251" key="GridCell.Tab.0.center" timestamp="1621522574394">
+    <state x="462" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1621676841242" />
+    <state width="1323" height="300" key="GridCell.Tab.0.bottom" timestamp="1621875622236">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="251" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1621522574394" />
-    <state width="1323" height="251" key="GridCell.Tab.0.left" timestamp="1621522574393">
+    <state width="1323" height="300" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621875622236" />
+    <state width="1323" height="300" key="GridCell.Tab.0.center" timestamp="1621875622235">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="251" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1621522574393" />
-    <state width="1323" height="251" key="GridCell.Tab.0.right" timestamp="1621522574394">
+    <state width="1323" height="300" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1621875622235" />
+    <state width="1323" height="300" key="GridCell.Tab.0.left" timestamp="1621875622234">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="251" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1621522574394" />
+    <state width="1323" height="300" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1621875622234" />
+    <state width="1323" height="300" key="GridCell.Tab.0.right" timestamp="1621875622235">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="300" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1621875622235" />
     <state x="213" y="19" key="Maven.ArtifactSearchDialog" timestamp="1620809616878">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -197,6 +212,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="499" y="142" key="chooseDestDirectoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1620301960027" />
+    <state x="65" y="0" key="new project wizard" timestamp="1621676847254">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="65" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1621676847254" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1620318314816">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

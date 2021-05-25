@@ -20,5 +20,5 @@ spring.jpa:
     connection:
       charset: utf8
       useUnicode: true
-    ddl-auto: none
+    ddl-auto: update
   properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
