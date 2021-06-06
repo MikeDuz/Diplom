@@ -1,6 +1,7 @@
 package skillbox.entity;
 
 import lombok.*;
+import skillbox.entity.enums.ModerationStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package skillbox.entity;
+package skillbox.entity.enums;
 
 public enum GlobalSettingCodeValue {
     YES,

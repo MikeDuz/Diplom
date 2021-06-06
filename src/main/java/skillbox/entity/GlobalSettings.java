@@ -1,9 +1,10 @@
 package skillbox.entity;
 
 import lombok.*;
+import skillbox.entity.enums.GlobalSettingCode;
+import skillbox.entity.enums.GlobalSettingCodeValue;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class GlobalSettings {
     private int id;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition="enum")
-    private GlobalSettingCode  code;
+    private GlobalSettingCode code;
     @Column(nullable = false)
     private String  name;
     @Enumerated(EnumType.STRING)

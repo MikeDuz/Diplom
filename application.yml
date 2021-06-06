@@ -20,12 +20,12 @@ spring.jpa:
     connection:
       charset: utf8
       useUnicode: true
-    ddl-auto: update
+    ddl-auto: none
   properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 blog:
   title: WD pub
-  subtitle: weeb disign pub
+  subtitle: web disign pub
   telegram: MikeVS1
   email: mikevs63@gmail.com
   copyright: Mikhail Smirniskiy

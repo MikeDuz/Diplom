@@ -29,12 +29,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="08.05.2021 HTML troubles">
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/InitResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/AuthCheckResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/GlobalSettingsResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/PostResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/GlobalSettig/GlobalSettingDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthCheckDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/init/InitDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/InitResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/SettingsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diplom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Diplom.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/api/response/InitResponse.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettingCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/GlobalSettingCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettingCodeValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/GlobalSettingCodeValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/ModerationStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/ModerationStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +69,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="dev" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -58,6 +90,9 @@
         <option name="mavenHome" value="C:\Users\MikeVS\AppData\Local\JetBrains\Toolbox\apps\IDEA-C\ch-0\202.8194.7\plugins\maven\lib\maven3" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="3" />
   </component>
   <component name="ProjectId" id="1rkOJuIE4tfczNAmPrsgLmweCXx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -69,17 +104,23 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.CommitDialog" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/OpenJDK/openjdk-11.0.11_9" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -89,8 +130,35 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="Diplom" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="skillbox.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="skillbox.Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -103,6 +171,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619516620423</updated>
+      <workItem from="1622876036444" duration="18322000" />
+      <workItem from="1622951606142" duration="4777000" />
+      <workItem from="1622986614482" duration="1599000" />
+      <workItem from="1622990316614" duration="1147000" />
     </task>
     <task id="LOCAL-00001" summary="08.05.2021 Create tables, mapping Hibernate">
       <created>1620459356492</created>
@@ -120,6 +192,9 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -150,59 +225,5 @@
     <MESSAGE value="08.05.2021 Create tables, mapping Hibernate" />
     <MESSAGE value="08.05.2021 HTML troubles" />
     <option name="LAST_COMMIT_MESSAGE" value="08.05.2021 HTML troubles" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="493" y="84" key="#Menus_and_Toolbars" timestamp="1620499838373">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="493" y="84" key="#Menus_and_Toolbars/0.0.1366.728@0.0.1366.728" timestamp="1620499838373" />
-    <state x="829" y="83" key="#com.intellij.ide.util.MemberChooser" timestamp="1620448949087">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="829" y="83" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1620448949086" />
-    <state x="505" y="288" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1620301985312">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="505" y="288" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1366.728@0.0.1366.728" timestamp="1620301985312" />
-    <state x="462" y="119" key="FileChooserDialogImpl" timestamp="1621676841242">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="462" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1621676841242" />
-    <state width="1323" height="283" key="GridCell.Tab.0.bottom" timestamp="1621931203851">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="283" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621931203851" />
-    <state width="1323" height="283" key="GridCell.Tab.0.center" timestamp="1621931203836">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="283" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1621931203836" />
-    <state width="1323" height="283" key="GridCell.Tab.0.left" timestamp="1621931203835">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="283" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1621931203835" />
-    <state width="1323" height="283" key="GridCell.Tab.0.right" timestamp="1621931203836">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="283" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1621931203836" />
-    <state x="213" y="19" key="Maven.ArtifactSearchDialog" timestamp="1620809616878">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="213" y="19" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1620809616878" />
-    <state x="184" y="9" key="SettingsEditor" timestamp="1620459611841">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1620459611841" />
-    <state x="499" y="142" key="chooseDestDirectoryDialog" timestamp="1620301960027">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="499" y="142" key="chooseDestDirectoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1620301960027" />
-    <state x="65" y="0" key="new project wizard" timestamp="1621676847254">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="65" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1621676847254" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1620318314816">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1620318314816" />
   </component>
 </project>

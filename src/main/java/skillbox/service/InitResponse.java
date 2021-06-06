@@ -1,13 +1,15 @@
-package skillbox.api.response;
+package skillbox.service;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import skillbox.dto.init.InitDTO;
 
 @Getter
 @Setter
-@Component
+@Service
 public class InitResponse {
     @Value("${blog.title}")
     private String title;
@@ -21,4 +23,9 @@ public class InitResponse {
     private String copyright;
     @Value("${blog.copyrightFrom}")
     private String copyrightFrom;
+
+    public InitDTO.Response.Create getInit() {
+        val response = new InitDTO.Response.Create(title, subTitle, telegram, email, copyright, copyrightFrom);
+        return response;
+    }
 }
