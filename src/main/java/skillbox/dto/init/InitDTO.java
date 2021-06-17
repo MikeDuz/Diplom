@@ -1,45 +1,26 @@
 package skillbox.dto.init;
 
-import lombok.Value;
-import javax.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
+@RequiredArgsConstructor
+public class InitDTO {
 
-public enum InitDTO {
-    ;
+    private String title;
+    private String subTitle;
+    private String telegram;
+    private String email;
+    private String copyright;
+    private String copyrightFrom;
 
-    private interface Title {
-        @Positive String getTitle();
-    }
-
-    private interface Subtitle {
-        @Positive String getSubtitle();
-    }
-
-    private interface Phone {
-        @Positive String getPhone();
-    }
-
-    private interface Telegram {
-        @Positive String getTelegram();
-    }
-
-    private interface Email {
-        @Positive String getEmail();
-    }
-
-    private interface CopyrightFrom {
-        @Positive String getCopyrightFrom();
-    }
-
-    public enum Response {;
-        @Value
-        public static class Create implements Title, Subtitle, Phone, Email, CopyrightFrom {
-            String title;
-            String subtitle;
-            String phone;
-            String telegram;
-            String email;
-            String copyrightFrom;
-        }
+    public InitDTO(String title, String subTitle, String telegram, String email, String copyright, String copyrightFrom) {
+        this.title = title;
+        this.subTitle = subTitle;
+        this.telegram = telegram;
+        this.email = email;
+        this.copyright = copyright;
+        this.copyrightFrom = copyrightFrom;
     }
 }

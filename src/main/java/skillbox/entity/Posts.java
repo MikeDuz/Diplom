@@ -5,6 +5,7 @@ import skillbox.entity.enums.ModerationStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -28,7 +29,7 @@ public class Posts {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users userId;
     @NotNull
-    private Date time;
+    private LocalDateTime time;
     @NotNull
     private String title;
     @NotNull

@@ -9,4 +9,7 @@ insert posts_comments (parent_id, post_id, text, time, user_id)
 			(1, 1, 'something', '24.05.2021', 2);
 insert tags (name)
 value('#impotant'),
-	('#joke')
+	('#joke');
+insert posts_votes (post_id, time, user_id, value)
+        value(1, '24.05.2021', 1, 1),
+            (2, '24.05.2021', 2, -1)

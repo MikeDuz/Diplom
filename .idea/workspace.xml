@@ -28,32 +28,48 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="08.05.2021 HTML troubles">
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/AuthCheckResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/GlobalSettingsResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/api/response/PostResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/GlobalSettig/GlobalSettingDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthCheckDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/init/InitDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/InitResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/SettingsService.java" afterDir="false" />
+    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/globalSettig/GlobalSettingDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostsInclude.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/tag/TagContain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/tag/TagDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/GlobalSettingMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/GlobalSettingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostCommentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostVotesRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/Mode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/TagCount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V3__insertUniqForTag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Diplom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Diplom.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/api/response/InitResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/api/response/AuthCheckResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/api/response/GlobalSettingsResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/api/response/PostResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiAuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiAuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiPostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/DefaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettingCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/GlobalSettingCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettingCodeValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/GlobalSettingCodeValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/GlobalSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/ModerationStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/enums/ModerationStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/GlobalSettig/GlobalSettingDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthCheckDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/AuthUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/authCheck/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/init/InitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/init/InitDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/InitResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/InitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/SettingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/SettingsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,9 +80,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -82,6 +102,11 @@
         </map>
       </branch-storage>
     </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -104,6 +129,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -121,15 +147,6 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.CommitDialog" />
   </component>
   <component name="RunManager" selected="Spring Boot.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/OpenJDK/openjdk-11.0.11_9" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="skillbox.Main" />
-      <module name="Diplom" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -142,6 +159,18 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="generated-requests#11" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="11" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests#6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests#8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="8" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests#9" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="9" runType="Run single request">
+      <method v="2" />
     </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Diplom" />
@@ -159,7 +188,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Main" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="HTTP Request.generated-requests#6" />
+        <item itemvalue="HTTP Request.generated-requests#11" />
+        <item itemvalue="HTTP Request.generated-requests#9" />
+        <item itemvalue="HTTP Request.generated-requests#8" />
       </list>
     </recent_temporary>
   </component>
@@ -175,6 +207,14 @@
       <workItem from="1622951606142" duration="4777000" />
       <workItem from="1622986614482" duration="1599000" />
       <workItem from="1622990316614" duration="1147000" />
+      <workItem from="1623063962184" duration="276000" />
+      <workItem from="1623301030218" duration="7567000" />
+      <workItem from="1623313967165" duration="4694000" />
+      <workItem from="1623332883264" duration="9402000" />
+      <workItem from="1623391408272" duration="401000" />
+      <workItem from="1623823826230" duration="1343000" />
+      <workItem from="1623833418961" duration="20548000" />
+      <workItem from="1623901839660" duration="36153000" />
     </task>
     <task id="LOCAL-00001" summary="08.05.2021 Create tables, mapping Hibernate">
       <created>1620459356492</created>

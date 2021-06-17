@@ -9,5 +9,10 @@ public class AuthUser {
 
     int id;
     String name;
+    String photo;
+    String email;
+    boolean moderation;
+    int moderationCount;
+    boolean setting;
 
 }

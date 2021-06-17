@@ -14,6 +14,6 @@ public class Tags {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 }

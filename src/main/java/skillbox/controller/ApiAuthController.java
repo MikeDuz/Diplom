@@ -1,11 +1,23 @@
 package skillbox.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import skillbox.dto.authCheck.AuthDTO;
+import skillbox.service.AuthCheckService;
 
 @RestController //определяем класс как контроллер
 @RequestMapping("/api/auth/")// задаем URL
 @Log4j2
+@RequiredArgsConstructor
 public class ApiAuthController {
+
+    private final AuthCheckService authCheck;
+
+    @GetMapping("check")
+    private AuthDTO authCheck() {
+        return authCheck.getAuthCheck();
+    }
 }

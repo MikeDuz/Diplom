@@ -1,15 +1,15 @@
 package skillbox.service;
 
 import org.springframework.stereotype.Service;
-import skillbox.api.response.AuthCheckResponse;
+import skillbox.dto.authCheck.AuthDTO;
 
 @Service
 public class AuthCheckService {
 
-    public AuthCheckResponse getAuthCheck() {
-        AuthCheckResponse authCheck = new AuthCheckResponse();
-        authCheck.setResult(false);
-        return authCheck;
+    public AuthDTO getAuthCheck() {
+        AuthDTO authResponce = new AuthDTO();
+        authResponce.setResult(false);
+        return authResponce;
     }
 
 

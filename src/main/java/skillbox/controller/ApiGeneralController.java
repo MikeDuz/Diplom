@@ -1,44 +1,42 @@
 package skillbox.controller;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import skillbox.api.response.AuthCheckResponse;
-import skillbox.api.response.GlobalSettingsResponse;
+import skillbox.dto.globalSettig.GlobalSettingDTO;
 import skillbox.dto.init.InitDTO;
+import skillbox.dto.tag.TagDTO;
 import skillbox.service.AuthCheckService;
+import skillbox.service.InitService;
 import skillbox.service.SettingsService;
+import skillbox.service.TagService;
 
-@RestController //определяем класс как контроллер
-@RequestMapping("/api")// задаем URL
-@Log4j2
+@RestController
+@RequestMapping("/api/")
+@RequiredArgsConstructor
 public class ApiGeneralController {
 
-    private final InitDTO initResponse;
+    private final InitService initResponse;
     private final SettingsService settingsService;
-    private final AuthCheckService authCheck;
+    private final TagService tagService;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public ApiGeneralController(InitDTO initResponse, SettingsService settingsService, AuthCheckService authCheck) {
-        this.initResponse = initResponse;
-        this.settingsService = settingsService;
-        this.authCheck = authCheck;
+    @GetMapping("init")
+    public ResponseEntity<InitDTO> init() {
+        return new ResponseEntity<>(initResponse.getInit(), HttpStatus.OK);
     }
 
-    @GetMapping("/init")
-    private InitDTO init() {
-        return initResponse;
+    @GetMapping("settings")
+    public ResponseEntity<GlobalSettingDTO> settings() {
+        return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
     }
 
-    @GetMapping("/settings")
-    private GlobalSettingsResponse settings() {
-        return settingsService.getGlobalSettings();
-    }
-
-    @GetMapping("/auth/check")
-    private AuthCheckResponse authCheck() {
-        return authCheck.getAuthCheck();
+    @GetMapping("tag")
+    public ResponseEntity<TagDTO> tag(@RequestParam(defaultValue = "all") String query) {
+        return new ResponseEntity<>(tagService.getTag(query), HttpStatus.OK);
     }
 
 }
