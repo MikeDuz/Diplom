@@ -4,15 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skillbox.dto.tag.TagDTO;
 import skillbox.dto.tag.TagContain;
-import skillbox.entity.Tag2Post;
+import skillbox.entity.Tags;
 import skillbox.mapping.TagMapping;
 import skillbox.repository.PostRepository;
+import skillbox.repository.Tag2PostRepository;
+import skillbox.repository.TagPostCount;
 import skillbox.repository.TagRepository;
-import skillbox.util.TagCount;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,15 +24,32 @@ public class TagService {
 
     private final PostRepository posts;
     private final TagRepository tagRepository;
+    private final Tag2PostRepository tagCount;
 
     public TagDTO getTag(String query) {
-        TagContain tagContain = new TagContain();
         double count = (double) posts.count();
-        Map<Integer, Integer> tagCounts = tagRepository.findCountTag();
-        double normK = 1/ count;
+        List<TagPostCount> tagCounts = tagCount.getTagPostCounts();
+        double normK = tagCounts.get(0).getPostCount()/ count;
         if(query.equals("all")) {
-            return TagMapping.tagMapping(tagCounts, normK, count);
+            return TagMapping.tagMapping(tagCounts, normK, count, tagRepository);
         }
-        return null;
+        List<Tags> tagList = tagRepository.findAll();
+        tagCounts.forEach(a -> tagSearch(tagList, query).stream().
+                filter(b -> a.getTagId() != b.getId()).map(b -> a).
+                forEachOrdered(tagList::remove));
+
+        return TagMapping.tagMapping(tagCounts, normK, count, tagRepository);
+    }
+
+    private List<Tags> tagSearch (List<Tags> tagList, String query) {
+        Pattern pat = Pattern.compile(query + ".*");
+        List<Tags> queryTags = new ArrayList<>();
+        tagList.stream().forEach(a -> {
+            Matcher match = pat.matcher(a.getName());
+            if(match.find()) {
+                queryTags.add(a);
+            }
+        });
+        return queryTags;
     }
 }

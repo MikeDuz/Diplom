@@ -13,6 +13,8 @@ import skillbox.repository.PostVotesRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class PostMapping{
@@ -31,7 +33,7 @@ public class PostMapping{
                     post.setDislikeCount(postVotes.findAllLike( - 1, a.getId()));
                     post.setCommentCount(postComment.findAllById(Collections.singleton(a.getId())).size());
                     post.setUser(postUserSet(user, a));
-                    post.setAnnounce(a.getText());
+                    post.setAnnounce(createAnnounce(a.getText()));
                     postInclude.add(post);
                 }
         );
@@ -43,6 +45,18 @@ public class PostMapping{
         user.setId(a.getUserId().getId());
         user.setName(a.getUserId().getName());
         return user;
+    }
+
+    private static String createAnnounce(String postText) {
+        if(postText.length() <= 150) {
+            return postText;
+        }
+        Pattern pat = Pattern.compile("^(.{150}\\w*)");
+        Matcher match = pat.matcher(postText);
+        if(match.find()) {
+            return match.group(1) + "...";
+        }
+        return "error";
     }
 
 }
