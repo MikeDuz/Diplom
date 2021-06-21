@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -27,7 +28,7 @@ public class PostComments {
     @NotNull
     private Users userId;
     @NotNull
-    private Date time;
+    private LocalDateTime time;
     @NotNull
     private String text;
 }

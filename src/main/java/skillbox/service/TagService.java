@@ -3,7 +3,6 @@ package skillbox.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skillbox.dto.tag.TagDTO;
-import skillbox.dto.tag.TagContain;
 import skillbox.entity.Tags;
 import skillbox.mapping.TagMapping;
 import skillbox.repository.PostRepository;
@@ -13,10 +12,9 @@ import skillbox.repository.TagRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor

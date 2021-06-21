@@ -3,7 +3,7 @@ package skillbox.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class CaptchaCodes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private Date time;
+    private LocalDateTime time;
     @Column(nullable = false)
     private byte code;
     @Column(nullable = false)

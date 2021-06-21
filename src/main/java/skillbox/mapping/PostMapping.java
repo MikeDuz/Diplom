@@ -21,10 +21,10 @@ public class PostMapping{
 
 
     public static PostDTO postMapping(PostDTO postDTO, Page<Posts> posts, PostVotesRepository postVotes, PostCommentsRepository postComment) {
-        PostsInclude post = new PostsInclude();
         PostUser user = new PostUser();
         List<PostsInclude> postInclude = new ArrayList<>();
                 posts.forEach(a -> {
+                    PostsInclude post = new PostsInclude();
                     post.setId(a.getId());
                     post.setTimeStamp(a.getTime());
                     post.setTitle(a.getTitle());
