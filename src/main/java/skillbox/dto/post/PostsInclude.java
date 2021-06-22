@@ -12,7 +12,7 @@ public class PostsInclude {
 
     int id;
     @JsonProperty("timestamp")
-    LocalDateTime timeStamp;
+    long timeStamp;
     PostUser user;
     String title;
     String announce;

@@ -33,7 +33,7 @@ public class PostService {
         }
         Pageable p = PageRequest.of(offset, limit);
         Page<Posts> posts = postRepository.findAll(p);
-        return PostMapping.postMapping(postDTO, posts, postVotes, postComment);
+        return PostMapping.postMapping(postDTO, posts, postVotes, postComment, mode);
 
     }
 }

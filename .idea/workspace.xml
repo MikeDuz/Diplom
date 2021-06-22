@@ -29,16 +29,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagPostCount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/DateConvertor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Diplom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Diplom.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/tag/TagDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/tag/TagDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostsInclude.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostsInclude.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/util/TagCount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +81,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="3" />
+  </component>
   <component name="ProjectId" id="1rkOJuIE4tfczNAmPrsgLmweCXx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -107,7 +105,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../socnet" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -119,6 +117,17 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="skillbox.Main" />
       <module name="Diplom" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -149,9 +158,9 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Spring Boot.Main" />
-        <item itemvalue="HTTP Request.generated-requests#6" />
         <item itemvalue="HTTP Request.generated-requests#11" />
         <item itemvalue="HTTP Request.generated-requests#9" />
+        <item itemvalue="HTTP Request.generated-requests#6" />
       </list>
     </recent_temporary>
   </component>
@@ -175,14 +184,9 @@
       <workItem from="1623823826230" duration="1343000" />
       <workItem from="1623833418961" duration="20548000" />
       <workItem from="1623901839660" duration="36153000" />
-      <workItem from="1623989466474" duration="1983000" />
-      <workItem from="1623992465881" duration="669000" />
-      <workItem from="1623993671868" duration="29232000" />
-      <workItem from="1624078400601" duration="816000" />
-      <workItem from="1624084606419" duration="2962000" />
-      <workItem from="1624163155274" duration="223000" />
-      <workItem from="1624168274217" duration="1302000" />
-      <workItem from="1624206679303" duration="3715000" />
+      <workItem from="1624293879766" duration="1788000" />
+      <workItem from="1624299127741" duration="118000" />
+      <workItem from="1624336660797" duration="11848000" />
     </task>
     <task id="LOCAL-00001" summary="08.05.2021 Create tables, mapping Hibernate">
       <created>1620459356492</created>
@@ -198,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620489311686</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="21.05.2021 Fix bug post">
+      <created>1624277877953</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1624277877953</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +243,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="08.05.2021 Create tables, mapping Hibernate" />
     <MESSAGE value="08.05.2021 HTML troubles" />
-    <option name="LAST_COMMIT_MESSAGE" value="08.05.2021 HTML troubles" />
+    <MESSAGE value="21.05.2021 Fix bug post" />
+    <option name="LAST_COMMIT_MESSAGE" value="21.05.2021 Fix bug post" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
