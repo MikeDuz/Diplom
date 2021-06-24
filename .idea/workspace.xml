@@ -28,13 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="22.06.2021 Second stage final">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagPostCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagPostCount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" afterDir="false" />
-    </list>
+    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="22.06.2021 Second stage final" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +62,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -194,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624277877953</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="24.06.2021 Fix bug query">
+      <created>1624539676485</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1624539676486</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +230,8 @@
     <MESSAGE value="08.05.2021 Create tables, mapping Hibernate" />
     <MESSAGE value="08.05.2021 HTML troubles" />
     <MESSAGE value="21.05.2021 Fix bug post" />
-    <option name="LAST_COMMIT_MESSAGE" value="21.05.2021 Fix bug post" />
+    <MESSAGE value="24.06.2021 Fix bug query" />
+    <option name="LAST_COMMIT_MESSAGE" value="24.06.2021 Fix bug query" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
