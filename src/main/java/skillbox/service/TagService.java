@@ -27,7 +27,7 @@ public class TagService {
     public TagDTO getTag(String query) {
         double count = (double) posts.count();
         List<TagPostCount> tagCounts = tagCount.getTagPostCounts();
-        double normK = tagCounts.get(0).getPostCount()/ count;
+        double normK = count / tagCounts.get(0).getPostCount();
         if(query.equals("all")) {
             return TagMapping.tagMapping(tagCounts, normK, count, tagRepository);
         }

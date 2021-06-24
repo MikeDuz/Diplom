@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface Tag2PostRepository extends JpaRepository<Tag2Post, Integer> {
-    @Query("SELECT t.id AS tagId, COUNT(t.tagId) AS postCount FROM Tag2Post t ORDER BY postCount DESC")
+    @Query("select t.tagId.id as tagId,t.tagId.name as tagName, count(distinct t.postId) as postCount from Tag2Post t group by t.tagId order by postCount desc")
     List<TagPostCount> getTagPostCounts();
 }

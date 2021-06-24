@@ -28,13 +28,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/DateConvertor.java" afterDir="false" />
+    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="22.06.2021 Second stage final">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostsInclude.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostsInclude.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__insertTestData.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagPostCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagPostCount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,9 +80,6 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="3" />
-  </component>
   <component name="ProjectId" id="1rkOJuIE4tfczNAmPrsgLmweCXx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -117,17 +113,6 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="skillbox.Main" />
       <module name="Diplom" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -256,8 +241,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java</url>
-          <line>15</line>
+          <line>13</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/mapping/TagMapping.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

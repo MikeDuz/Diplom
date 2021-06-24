@@ -11,10 +11,10 @@ import java.util.List;
 public class TagMapping {
 
     public static TagDTO tagMapping(List<TagPostCount> tagCountList, double normK, double count, TagRepository tagRepository) {
-        TagContain tagContain = new TagContain();
         TagDTO tagDTO = new TagDTO();
         tagCountList.forEach( a -> {
-            tagContain.setName(tagRepository.findById(a.getTagId()).get().getName());
+            TagContain tagContain = new TagContain();
+            tagContain.setName(a.getTagName());
             tagContain.setWeight((a.getPostCount()/ count) * normK);
             tagDTO.addTag(tagContain);
         });
