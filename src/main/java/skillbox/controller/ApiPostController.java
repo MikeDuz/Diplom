@@ -26,4 +26,11 @@ public class ApiPostController {
 
     }
 
+    @GetMapping("/search")
+    public PostDTO searchPost(@RequestParam(required = false, defaultValue = "0") int offset,
+                             @RequestParam(required = false, defaultValue = "10") int limit,
+                             @RequestParam(defaultValue = "") String query) {
+        return postService.searchPost(offset, limit, query);
+    }
+
 }

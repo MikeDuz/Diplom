@@ -26,7 +26,7 @@ public class PostMapping {
 
 
     public static PostDTO postMapping(PostDTO postDTO,
-                                      Page<Posts> posts,
+                                      List<Posts> posts,
                                       PostVotesRepository postVotes,
                                       PostCommentsRepository postComment,
                                       Mode param) {
