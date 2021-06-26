@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skillbox.dto.post.PostDTO;
-import skillbox.util.Mode;
+import skillbox.dto.Mode;
 import skillbox.service.PostService;
 
 @RequiredArgsConstructor

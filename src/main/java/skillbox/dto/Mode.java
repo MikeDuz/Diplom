@@ -1,4 +1,4 @@
-package skillbox.util;
+package skillbox.dto;
 
 public enum Mode {
     recent,

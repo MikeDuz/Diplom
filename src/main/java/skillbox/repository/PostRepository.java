@@ -1,7 +1,14 @@
 package skillbox.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import skillbox.entity.Posts;
+import org.springframework.data.jpa.repository.Query;
+import skillbox.entity.Post;
 
-public interface PostRepository extends JpaRepository<Posts, Integer> {
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface PostRepository extends JpaRepository<Post, Integer> {
+
+    @Query("select p.time as date from Post p where p.moderationStatus = 'ACCEPTED' and p.isActive = true and p.time < ?1 ")
+    List<LocalDateTime> findAllTime(LocalDateTime dateNow);
 }

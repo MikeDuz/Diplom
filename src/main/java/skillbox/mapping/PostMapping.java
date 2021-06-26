@@ -2,15 +2,15 @@ package skillbox.mapping;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import skillbox.dto.post.PostDTO;
 import skillbox.dto.post.PostUser;
 import skillbox.dto.post.PostsInclude;
-import skillbox.entity.Posts;
+import skillbox.entity.Post;
 import skillbox.repository.PostCommentsRepository;
 import skillbox.repository.PostVotesRepository;
 import skillbox.util.DateConvertor;
-import skillbox.util.Mode;
+import skillbox.dto.Mode;
+import skillbox.util.PostPublic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,38 +19,39 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static skillbox.util.Mode.*;
+import static skillbox.dto.Mode.*;
 
 @RequiredArgsConstructor
 public class PostMapping {
 
 
     public static PostDTO postMapping(PostDTO postDTO,
-                                      List<Posts> posts,
+                                      List<Post> posts,
                                       PostVotesRepository postVotes,
                                       PostCommentsRepository postComment,
                                       Mode param) {
         List<PostsInclude> postInclude = new ArrayList<>();
-        posts.forEach(a -> {
-                    PostsInclude post = new PostsInclude();
-                    post.setId(a.getId());
-                    post.setTimeStamp(DateConvertor.getTimestamp(a.getTime()));
-                    post.setTitle(a.getTitle());
-                    post.setViewCount(a.getViewCount());
-                    post.setLikeCount(postVotes.findAllLike(1, a.getId()));
-                    post.setDislikeCount(postVotes.findAllLike(-1, a.getId()));
-                    post.setCommentCount(postComment.findAllById(Collections.singleton(a.getId())).size());
-                    post.setUser(postUserSet(a));
-                    post.setAnnounce(createAnnounce(a.getText()));
-                    postInclude.add(post);
-                }
-        );
+        for (Post a : posts) {
+            if(PostPublic.postPublic(a)) {
+                PostsInclude post = new PostsInclude();
+                post.setId(a.getId());
+                post.setTimeStamp(DateConvertor.getTimestamp(a.getTime()));
+                post.setTitle(a.getTitle());
+                post.setViewCount(a.getViewCount());
+                post.setLikeCount(postVotes.findAllLike(1, a.getId()));
+                post.setDislikeCount(postVotes.findAllLike(-1, a.getId()));
+                post.setCommentCount(postComment.findAllById(Collections.singleton(a.getId())).size());
+                post.setUser(postUserSet(a));
+                post.setAnnounce(createAnnounce(a.getText()));
+                postInclude.add(post);
+            }
+        }
         sortArray(postInclude, param);
         postDTO.setPosts(postInclude);
         return postDTO;
     }
 
-    private static PostUser postUserSet(Posts a) {
+    private static PostUser postUserSet(Post a) {
         PostUser user = new PostUser();
         user.setId(a.getUserId().getId());
         user.setName(a.getUserId().getName());
