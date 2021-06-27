@@ -2,12 +2,12 @@ package skillbox.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import skillbox.dto.post.PostDTO;
 import skillbox.dto.Mode;
+import skillbox.dto.post.SinglePostDTO;
 import skillbox.service.PostService;
 import skillbox.service.TagService;
 
@@ -42,4 +42,13 @@ public class ApiPostController {
         return postService.searchPostByTag(offset, limit, tag);
     }
 
+    @GetMapping("/{ID}")
+    public SinglePostDTO searchPostById(@PathVariable("ID") int postId) {
+        if(postService.searchPostById(postId) == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "post not found"
+            );
+        }
+        return postService.searchPostById(postId);
+    }
 }

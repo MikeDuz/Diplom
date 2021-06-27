@@ -25,7 +25,7 @@ public class PostComments {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @NotNull
-    private Users userId;
+    private User userId;
     @NotNull
     private LocalDateTime time;
     @NotNull

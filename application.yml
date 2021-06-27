@@ -10,8 +10,8 @@ spring:
         validator:
           apply_to_ddl: false
   flyway:
-  username: root
-  password: test4321
+#  username: root
+#  password: test4321
   schemas: db_migrate
   enabled: true
   validate-on-migrate: true

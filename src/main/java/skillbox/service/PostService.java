@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skillbox.dto.Mode;
 import skillbox.dto.post.PostDTO;
+import skillbox.dto.post.SinglePostDTO;
 import skillbox.entity.Post;
 import skillbox.entity.Tag2Post;
 import skillbox.mapping.PostMapping;
 import skillbox.repository.*;
+import skillbox.util.PostPublic;
 import skillbox.util.SetLimit;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class PostService {
     private final PostCommentsRepository postComment;
     private final TagRepository tagRepository;
     private final Tag2PostRepository tag2PostRepository;
+    private final UserRepository userRepository;
 
     public PostDTO getPosts(int offset, int limit, Mode mode) {
         PostDTO postDTO = new PostDTO();
@@ -38,7 +41,7 @@ public class PostService {
         }
         List<Post> posts = postRepository.findAll(LocalDateTime.now());
         List<Post> postPage = posts.subList(offset, offset + limit);
-        return PostMapping.postMapping(postDTO, postPage, postVotes, postComment, mode);
+        return PostMapping.postMapping(postDTO, postPage, postVotes, postComment, mode, true);
 
     }
 
@@ -68,7 +71,7 @@ public class PostService {
         postDTO.setCount(searchPost.size());
         limit = SetLimit.setLimit(offset, limit, searchPost.size());
         List<Post> pageList = searchPost.subList(offset, offset + limit);
-        return PostMapping.postMapping(postDTO, pageList, postVotes, postComment, recent);
+        return PostMapping.postMapping(postDTO, pageList, postVotes, postComment, recent, true);
     }
 
     public PostDTO searchPostByTag(int offset, int limit, String tag) {
@@ -82,7 +85,17 @@ public class PostService {
         List<Post> pageList = postByTag.subList(offset, limit);
         PostDTO postDTO = new PostDTO();
         postDTO.setCount(postByTag.size());
-        return PostMapping.postMapping(postDTO, postByTag, postVotes, postComment, recent);
+        return PostMapping.postMapping(postDTO, pageList, postVotes, postComment, recent, true);
+    }
+
+    public SinglePostDTO searchPostById(int postId) {
+        Post post = postRepository.getOne(postId);
+        SinglePostDTO postDTO = new SinglePostDTO();
+        if(post == null || !PostPublic.postPublic(post)) {
+            return postDTO;
+        }
+        //postRepository.incrViewCount(postId);
+        return PostMapping.createSinglePost(post, postVotes, postComment, tag2PostRepository);
     }
 
 }

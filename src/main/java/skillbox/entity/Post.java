@@ -6,7 +6,6 @@ import skillbox.entity.enums.ModerationStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -24,10 +23,10 @@ public class Post {
     private ModerationStatus moderationStatus;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "moderator_id", referencedColumnName = "id")
-    private Users moderatorId;
+    private User moderatorId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users userId;
+    private User userId;
     @NotNull
     private LocalDateTime time;
     @NotNull

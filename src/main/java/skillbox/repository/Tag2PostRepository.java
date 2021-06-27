@@ -17,4 +17,7 @@ public interface Tag2PostRepository extends JpaRepository<Tag2Post, Integer> {
 
     @Query("from Tag2Post t where t.tagId.name = ?1")
     List<Tag2Post> getTag2PostByTagId(String tag);
+
+    @Query("from Tag2Post t where t.postId.id = ?1")
+    List<Tag2Post> findTagByPost(int postId);
 }

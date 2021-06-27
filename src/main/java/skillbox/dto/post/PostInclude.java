@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PostsInclude {
+public class PostInclude {
 
     int id;
     @JsonProperty("timestamp")

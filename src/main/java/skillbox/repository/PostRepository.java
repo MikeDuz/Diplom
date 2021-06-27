@@ -1,6 +1,7 @@
 package skillbox.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import skillbox.entity.Post;
 
@@ -14,4 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("from Post p where p.moderationStatus = 'ACCEPTED' and p.isActive = true and p.time < ?1 ")
     List<Post> findAll(LocalDateTime dateNow);
+
+    @Modifying
+    @Query("update Post p set p.viewCount = p.viewCount + 1 where p.id = ?1")
+    void incrViewCount(int postId);
 }
