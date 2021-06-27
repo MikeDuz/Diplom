@@ -22,13 +22,13 @@ public class TagService {
 
     private final PostRepository posts;
     private final TagRepository tagRepository;
-    private final Tag2PostRepository tagCount;
+    private final Tag2PostRepository tag2PostRepository;
 
     public TagDTO getTag(String query) {
         double count = (double) posts.count();
-        List<TagPostCount> tagCounts = tagCount.getTagPostCounts();
+        List<TagPostCount> tagCounts = tag2PostRepository.getTagPostCounts();
         double normK = count / tagCounts.get(0).getPostCount();
-        if(query.equals("all")) {
+        if (query.equals("all")) {
             return TagMapping.tagMapping(tagCounts, normK, count, tagRepository);
         }
         List<Tags> tagList = tagRepository.findAll();
@@ -39,15 +39,16 @@ public class TagService {
         return TagMapping.tagMapping(tagCounts, normK, count, tagRepository);
     }
 
-    private List<Tags> tagSearch (List<Tags> tagList, String query) {
+    private List<Tags> tagSearch(List<Tags> tagList, String query) {
         Pattern pat = Pattern.compile(query + ".*");
         List<Tags> queryTags = new ArrayList<>();
         tagList.stream().forEach(a -> {
             Matcher match = pat.matcher(a.getName());
-            if(match.find()) {
+            if (match.find()) {
                 queryTags.add(a);
             }
         });
         return queryTags;
     }
+
 }

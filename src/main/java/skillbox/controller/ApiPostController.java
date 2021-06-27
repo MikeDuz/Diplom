@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import skillbox.dto.post.PostDTO;
 import skillbox.dto.Mode;
 import skillbox.service.PostService;
+import skillbox.service.TagService;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +18,7 @@ import skillbox.service.PostService;
 public class ApiPostController {
 
     private final PostService postService;
+    private final TagService tagService;
 
     @GetMapping()
     public PostDTO getPost(@RequestParam(required = false, defaultValue = "0") int offset,
@@ -31,6 +33,13 @@ public class ApiPostController {
                              @RequestParam(required = false, defaultValue = "10") int limit,
                              @RequestParam(defaultValue = "") String query) {
         return postService.searchPost(offset, limit, query);
+    }
+
+    @GetMapping("/byTag")
+    public PostDTO searchPostByTag(@RequestParam(required = false, defaultValue = "0") int offset,
+                                   @RequestParam(required = false, defaultValue = "10") int limit,
+                                   @RequestParam(defaultValue = "") String tag) {
+        return postService.searchPostByTag(offset, limit, tag);
     }
 
 }

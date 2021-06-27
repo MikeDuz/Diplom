@@ -11,4 +11,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("select p.time as date from Post p where p.moderationStatus = 'ACCEPTED' and p.isActive = true and p.time < ?1 ")
     List<LocalDateTime> findAllTime(LocalDateTime dateNow);
+
+    @Query("from Post p where p.moderationStatus = 'ACCEPTED' and p.isActive = true and p.time < ?1 ")
+    List<Post> findAll(LocalDateTime dateNow);
 }

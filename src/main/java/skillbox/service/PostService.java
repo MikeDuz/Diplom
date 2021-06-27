@@ -1,18 +1,16 @@
 package skillbox.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import skillbox.dto.Mode;
 import skillbox.dto.post.PostDTO;
 import skillbox.entity.Post;
-import skillbox.dto.Mode;
+import skillbox.entity.Tag2Post;
 import skillbox.mapping.PostMapping;
-import skillbox.repository.PostCommentsRepository;
-import skillbox.repository.PostRepository;
-import skillbox.repository.PostVotesRepository;
+import skillbox.repository.*;
 import skillbox.util.SetLimit;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,6 +25,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostVotesRepository postVotes;
     private final PostCommentsRepository postComment;
+    private final TagRepository tagRepository;
+    private final Tag2PostRepository tag2PostRepository;
 
     public PostDTO getPosts(int offset, int limit, Mode mode) {
         PostDTO postDTO = new PostDTO();
@@ -36,9 +36,9 @@ public class PostService {
         if (postCount == 0) {
             return postDTO;
         }
-        Pageable p = PageRequest.of(offset, limit);
-        List<Post> posts = postRepository.findAll(p).getContent();
-        return PostMapping.postMapping(postDTO, posts, postVotes, postComment, mode);
+        List<Post> posts = postRepository.findAll(LocalDateTime.now());
+        List<Post> postPage = posts.subList(offset, offset + limit);
+        return PostMapping.postMapping(postDTO, postPage, postVotes, postComment, mode);
 
     }
 
@@ -50,7 +50,7 @@ public class PostService {
             postDTO.setCount(0);
             return postDTO;
         }
-        List<Post> allPost = postRepository.findAll();
+        List<Post> allPost = postRepository.findAll(LocalDateTime.now());
         if (allPost.size() == 0) {
             postDTO.setCount(0);
             return postDTO;
@@ -67,8 +67,22 @@ public class PostService {
         });
         postDTO.setCount(searchPost.size());
         limit = SetLimit.setLimit(offset, limit, searchPost.size());
-        List<Post> pageList = searchPost.subList(offset, limit);
+        List<Post> pageList = searchPost.subList(offset, offset + limit);
         return PostMapping.postMapping(postDTO, pageList, postVotes, postComment, recent);
+    }
+
+    public PostDTO searchPostByTag(int offset, int limit, String tag) {
+        List<Tag2Post> tag2PostList = tag2PostRepository.getTag2PostByTagId(tag);
+        List<Post> postByTag = new ArrayList<>();
+        tag2PostList.forEach(a -> {
+            Post post = postRepository.getOne(a.getPostId().getId());
+            postByTag.add(post);
+        });
+        limit = SetLimit.setLimit(offset, limit, postByTag.size());
+        List<Post> pageList = postByTag.subList(offset, limit);
+        PostDTO postDTO = new PostDTO();
+        postDTO.setCount(postByTag.size());
+        return PostMapping.postMapping(postDTO, postByTag, postVotes, postComment, recent);
     }
 
 }

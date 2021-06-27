@@ -8,4 +8,6 @@ import skillbox.entity.Tags;
 @Repository
 public interface TagRepository extends JpaRepository<Tags, Integer> {
 
+    Tags findAllByName(String name);
+
 }
