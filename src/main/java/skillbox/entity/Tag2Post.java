@@ -18,7 +18,7 @@ public class Tag2Post {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @NotNull
-    private Posts postId;
+    private Post postId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "tag_id", referencedColumnName = "id")
     @NotNull

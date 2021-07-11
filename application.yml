@@ -1,27 +1,22 @@
-spring.datasource.url: jdbc:mysql://localhost:3306/diplom?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
-spring.datasource.username: root
-spring.datasource.password: test4321
-
-spring.jpa.show-sql: true
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/diplom?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
+    username: root
+    password: test4321
   jpa:
-    properties:
-      hibernate:
-        validator:
-          apply_to_ddl: false
+    hibernate:
+      ddl-auto: validate
+      connection:
+        charset: utf8
+        useUnicode: true
+      show-sql: true
+      properties:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   flyway:
-  username: root
-  password: test4321
   schemas: db_migrate
   enabled: true
   validate-on-migrate: true
-spring.jpa:
-  hibernate:
-    connection:
-      charset: utf8
-      useUnicode: true
-    ddl-auto: none
-  properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 blog:
   title: WD pub
@@ -30,4 +25,5 @@ blog:
   email: mikevs63@gmail.com
   copyright: Mikhail Smirniskiy
   copyrightFrom: 2021
+  liveTimeCaptcha: 1200000
 

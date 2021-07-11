@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import skillbox.dto.calendar.CalendarDTO;
 import skillbox.dto.globalSettig.GlobalSettingDTO;
 import skillbox.dto.init.InitDTO;
 import skillbox.dto.tag.TagDTO;
-import skillbox.service.AuthCheckService;
-import skillbox.service.InitService;
-import skillbox.service.SettingsService;
-import skillbox.service.TagService;
+import skillbox.service.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/")
@@ -23,6 +23,7 @@ public class ApiGeneralController {
     private final InitService initResponse;
     private final SettingsService settingsService;
     private final TagService tagService;
+    private final CalendarService calendarService;
 
     @GetMapping("init")
     public ResponseEntity<InitDTO> init() {
@@ -37,6 +38,11 @@ public class ApiGeneralController {
     @GetMapping("tag")
     public ResponseEntity<TagDTO> tag(@RequestParam(defaultValue = "all") String query) {
         return new ResponseEntity<>(tagService.getTag(query), HttpStatus.OK);
+    }
+
+    @GetMapping("calendar")
+    public ResponseEntity<CalendarDTO> calendar(@RequestParam(defaultValue = "0") int year) {
+        return new ResponseEntity<>(calendarService.getCalendar(year), HttpStatus.OK);
     }
 
 }

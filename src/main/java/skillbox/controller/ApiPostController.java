@@ -2,13 +2,14 @@ package skillbox.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import skillbox.dto.post.PostDTO;
-import skillbox.util.Mode;
+import skillbox.dto.Mode;
+import skillbox.dto.post.SinglePostDTO;
 import skillbox.service.PostService;
+import skillbox.service.TagService;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +18,7 @@ import skillbox.service.PostService;
 public class ApiPostController {
 
     private final PostService postService;
+    private final TagService tagService;
 
     @GetMapping()
     public PostDTO getPost(@RequestParam(required = false, defaultValue = "0") int offset,
@@ -26,4 +28,22 @@ public class ApiPostController {
 
     }
 
+    @GetMapping("/search")
+    public PostDTO searchPost(@RequestParam(required = false, defaultValue = "0") int offset,
+                             @RequestParam(required = false, defaultValue = "10") int limit,
+                             @RequestParam(defaultValue = "") String query) {
+        return postService.searchPost(offset, limit, query);
+    }
+
+    @GetMapping("/byTag")
+    public PostDTO searchPostByTag(@RequestParam(required = false, defaultValue = "0") int offset,
+                                   @RequestParam(required = false, defaultValue = "10") int limit,
+                                   @RequestParam(defaultValue = "") String tag) {
+        return postService.searchPostByTag(offset, limit, tag);
+    }
+
+    @GetMapping("/{id}")
+    public SinglePostDTO searchPostById(@PathVariable("id") int postId) {
+        return postService.searchPostById(postId);
+    }
 }

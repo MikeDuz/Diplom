@@ -17,7 +17,7 @@ public class CaptchaCodes {
     @Column(nullable = false)
     private LocalDateTime time;
     @Column(nullable = false)
-    private byte code;
+    private String code;
     @Column(nullable = false)
-    private byte secretCode;
+    private String secretCode;
 }

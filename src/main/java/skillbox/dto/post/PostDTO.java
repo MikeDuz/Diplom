@@ -10,5 +10,5 @@ import java.util.List;
 public class PostDTO {
 
     int count;
-    List<PostsInclude> posts;
+    List<PostInclude> posts;
 }

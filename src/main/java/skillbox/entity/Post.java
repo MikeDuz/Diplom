@@ -6,14 +6,13 @@ import skillbox.entity.enums.ModerationStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "posts")
-public class Posts {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,17 +23,17 @@ public class Posts {
     private ModerationStatus moderationStatus;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "moderator_id", referencedColumnName = "id")
-    private Users moderatorId;
+    private User moderatorId;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users userId;
+    private User userId;
     @NotNull
     private LocalDateTime time;
     @NotNull
     private String title;
     @NotNull
     private String text;
-    @NotNull
+    @Column(nullable = false, name = "view_count")
     private int viewCount;
 
 }
