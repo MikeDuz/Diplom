@@ -42,13 +42,8 @@ public class ApiPostController {
         return postService.searchPostByTag(offset, limit, tag);
     }
 
-    @GetMapping("/{ID}")
-    public SinglePostDTO searchPostById(@PathVariable("ID") int postId) {
-        if(postService.searchPostById(postId) == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "post not found"
-            );
-        }
+    @GetMapping("/{id}")
+    public SinglePostDTO searchPostById(@PathVariable("id") int postId) {
         return postService.searchPostById(postId);
     }
 }

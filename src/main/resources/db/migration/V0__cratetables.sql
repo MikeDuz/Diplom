@@ -1,7 +1,7 @@
 create table captcha_codes (
-id integer primary key not null,
-code tinyint not null,
-secret_code tinyint not null,
+id integer primary key auto_increment not null,
+code varchar(255) not null,
+secret_code varchar(255) not null,
 time timestamp not null
 ) engine=InnoDB;
 create table global_settings (
@@ -12,13 +12,13 @@ value enum('YES','NO') not null
 ) engine=InnoDB;
 create table users (
 id integer primary key auto_increment not null,
-is_moderator tinyint not null,
+is_moderator bit not null,
 reg_time datetime not null,
 name varchar(255) not null,
 email varchar(255) not null,
 password varchar(255) not null,
 code varchar(255),
-photo text
+photo varchar (255)
 ) engine=InnoDB;
 create table posts (
 id integer primary key auto_increment not null,

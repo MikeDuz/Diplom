@@ -2,6 +2,7 @@ package skillbox.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import skillbox.dto.Mode;
 import skillbox.dto.post.PostDTO;
 import skillbox.dto.post.SinglePostDTO;
@@ -88,13 +89,14 @@ public class PostService {
         return PostMapping.postMapping(postDTO, pageList, postVotes, postComment, recent, true);
     }
 
+    @Transactional
     public SinglePostDTO searchPostById(int postId) {
         Post post = postRepository.getOne(postId);
         SinglePostDTO postDTO = new SinglePostDTO();
         if(post == null || !PostPublic.postPublic(post)) {
             return postDTO;
         }
-        //postRepository.incrViewCount(postId);
+        postRepository.incrViewCount(postId);
         return PostMapping.createSinglePost(post, postVotes, postComment, tag2PostRepository);
     }
 

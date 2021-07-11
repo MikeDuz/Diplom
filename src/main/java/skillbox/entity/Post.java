@@ -33,7 +33,7 @@ public class Post {
     private String title;
     @NotNull
     private String text;
-    @NotNull
+    @Column(nullable = false, name = "view_count")
     private int viewCount;
 
 }
