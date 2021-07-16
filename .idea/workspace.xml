@@ -28,24 +28,34 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="25.06.2021 Post search">
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/calendar/CalendarDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/calendar/PostByDate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostByDate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/CalendarService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/PostPublic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/SetLimit.java" afterDir="false" />
+    <list default="true" id="10b23525-be1a-49c4-a981-d1cd05262f2c" name="Default Changelist" comment="27.06.2021 III stage">
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/AuthCheckService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/PostServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/skillbox/util/SetPageNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V3__insertUniqForTag.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V4__insertTestPost.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diplom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Diplom.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiAuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiAuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiGeneralController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/controller/ApiPostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostComments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostComments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/PostVotes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Posts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tag2Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/entity/Tag2Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostInclude.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/post/PostInclude.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/mapping/PostMapping.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/Tag2PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/repository/TagRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/AuthCheckService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/CalendarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/CalendarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/CaptchaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/CaptchaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/InitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/InitService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/util/Mode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/dto/Mode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/SettingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/SettingsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/skillbox/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/skillbox/service/impl/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V0__cratetables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V0__cratetables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__insertUniqForTag" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +66,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -129,13 +139,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -197,6 +209,15 @@
       <workItem from="1624336660797" duration="11848000" />
       <workItem from="1624619904588" duration="3687000" />
       <workItem from="1624686597578" duration="21159000" />
+      <workItem from="1626072547269" duration="350000" />
+      <workItem from="1626259407369" duration="3000" />
+      <workItem from="1626266708476" duration="736000" />
+      <workItem from="1626271312725" duration="696000" />
+      <workItem from="1626274099637" duration="6694000" />
+      <workItem from="1626325543562" duration="2835000" />
+      <workItem from="1626333167023" duration="17447000" />
+      <workItem from="1626360252799" duration="8399000" />
+      <workItem from="1626413491939" duration="25593000" />
     </task>
     <task id="LOCAL-00001" summary="08.05.2021 Create tables, mapping Hibernate">
       <created>1620459356492</created>

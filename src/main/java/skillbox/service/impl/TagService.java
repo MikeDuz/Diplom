@@ -1,4 +1,4 @@
-package skillbox.service;
+package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

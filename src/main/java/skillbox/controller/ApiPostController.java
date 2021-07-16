@@ -3,13 +3,15 @@ package skillbox.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import skillbox.dto.post.PostDTO;
 import skillbox.dto.Mode;
 import skillbox.dto.post.SinglePostDTO;
-import skillbox.service.PostService;
-import skillbox.service.TagService;
+import skillbox.service.impl.PostServiceImpl;
+import skillbox.service.impl.TagService;
+
+import java.text.ParseException;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,7 +19,7 @@ import skillbox.service.TagService;
 @Log4j2
 public class ApiPostController {
 
-    private final PostService postService;
+    private final PostServiceImpl postService;
     private final TagService tagService;
 
     @GetMapping()
@@ -45,5 +47,13 @@ public class ApiPostController {
     @GetMapping("/{id}")
     public SinglePostDTO searchPostById(@PathVariable("id") int postId) {
         return postService.searchPostById(postId);
+    }
+
+    @GetMapping("/byDate")
+    public ResponseEntity<PostDTO> searchPostByDate(@RequestParam(required = false, defaultValue = "0") int offset,
+                                                    @RequestParam(required = false, defaultValue = "10") int limit,
+                                                    @RequestParam(required = true) String date) throws ParseException {
+        return new ResponseEntity<>(postService.searchPostByDate(offset, limit, date), HttpStatus.OK);
+
     }
 }

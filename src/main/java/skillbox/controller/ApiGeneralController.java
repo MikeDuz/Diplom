@@ -11,9 +11,10 @@ import skillbox.dto.calendar.CalendarDTO;
 import skillbox.dto.globalSettig.GlobalSettingDTO;
 import skillbox.dto.init.InitDTO;
 import skillbox.dto.tag.TagDTO;
-import skillbox.service.*;
-
-import java.time.LocalDateTime;
+import skillbox.service.impl.CalendarService;
+import skillbox.service.impl.InitService;
+import skillbox.service.impl.SettingsService;
+import skillbox.service.impl.TagService;
 
 @RestController
 @RequestMapping("/api/")

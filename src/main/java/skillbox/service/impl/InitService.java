@@ -1,4 +1,4 @@
-package skillbox.service;
+package skillbox.service.impl;
 
 import lombok.Getter;
 import lombok.Setter;
