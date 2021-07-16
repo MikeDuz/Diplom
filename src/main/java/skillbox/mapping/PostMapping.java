@@ -2,6 +2,7 @@ package skillbox.mapping;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import skillbox.dto.post.*;
 import skillbox.entity.Post;
 import skillbox.entity.PostComments;
@@ -18,6 +19,7 @@ import skillbox.util.PostPublic;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static skillbox.dto.Mode.*;
 
@@ -26,21 +28,15 @@ public class PostMapping {
 
 
     public static PostDTO postMapping(PostDTO postDTO,
-                                      List<Post> posts,
+                                      Page<Post> posts,
                                       PostVotesRepository postVotes,
                                       PostCommentsRepository postComment,
                                       Mode param,
                                       boolean isShort) {
-        List<PostInclude> includes = new ArrayList<>();
-        for (Post a : posts) {
-            PostInclude postInclude = createPostInclude(a,
-                    postVotes,
-                    postComment,
-                    isShort);
-            if (postInclude != null) {
-                includes.add(postInclude);
-            }
-        }
+        List<PostInclude> includes = posts.stream().map(a -> createPostInclude(a,
+                postVotes,
+                postComment,
+                isShort)).filter(Objects::nonNull).collect(Collectors.toList());
         sortArray(includes, param);
         postDTO.setPosts(includes);
         return postDTO;
@@ -82,19 +78,18 @@ public class PostMapping {
 
     public static PostInclude createPostInclude(Post post,
                                                 PostVotesRepository postVotes,
-                                                PostCommentsRepository postComment,
-                                                boolean isShort) {
+                                                PostCommentsRepository postComment, boolean isShort) {
         if (PostPublic.postPublic(post)) {
-            PostInclude postInclude = new PostInclude();
-            postInclude.setId(post.getId());
-            postInclude.setTimeStamp(DateConvertor.getTimestamp(post.getTime()));
-            postInclude.setTitle(post.getTitle());
-            postInclude.setViewCount(post.getViewCount());
-            postInclude.setLikeCount(postVotes.findAllLike(1, post.getId()));
-            postInclude.setDislikeCount(postVotes.findAllLike(-1, post.getId()));
-            postInclude.setCommentCount(postComment.findAllById(Collections.singleton(post.getId())).size());
-            postInclude.setUser(postUserSet(post));
-            postInclude.setAnnounce(createAnnounce(post.getText()));
+            PostInclude postInclude = PostInclude.builder()
+            .id(post.getId())
+            .timeStamp(DateConvertor.getTimestamp(post.getTime()))
+            .title(post.getTitle())
+            .viewCount(post.getViewCount())
+            .likeCount(postVotes.findAllLike(1, post.getId()))
+            .dislikeCount(postVotes.findAllLike(-1, post.getId()))
+            .commentCount(postComment.findAllById(Collections.singleton(post.getId())).size())
+            .user(postUserSet(post))
+            .announce(createAnnounce(post.getText())).build();
             return postInclude;
         }
         return null;

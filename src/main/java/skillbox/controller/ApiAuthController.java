@@ -1,7 +1,6 @@
 package skillbox.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +8,9 @@ import skillbox.dto.authCheck.AuthDTO;
 import skillbox.dto.captcha.CaptchaDto;
 import skillbox.dto.userDto.RegisterDto;
 import skillbox.dto.userDto.RegisterResponse;
-import skillbox.service.AuthCheckService;
-import skillbox.service.CaptchaService;
-import skillbox.service.UserService;
+import skillbox.service.impl.AuthCheckService;
+import skillbox.service.impl.CaptchaService;
+import skillbox.service.impl.UserService;
 
 import java.io.IOException;
 

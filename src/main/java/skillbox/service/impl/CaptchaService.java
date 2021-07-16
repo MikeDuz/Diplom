@@ -1,23 +1,18 @@
-package skillbox.service;
+package skillbox.service.impl;
 
 import com.github.cage.Cage;
 import com.github.cage.image.Painter;
 import com.github.cage.token.RandomTokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skillbox.dto.captcha.CaptchaDto;
 import skillbox.entity.CaptchaCodes;
 import skillbox.repository.CaptchaRepository;
-import skillbox.util.DateConvertor;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Random;
 
