@@ -12,7 +12,7 @@ public class InitService {
     @Value("${blog.title}")
     private String title;
     @Value("${blog.subtitle}")
-    private String subTitle;
+    private String subtitle;
     @Value("${blog.telegram}")
     private String telegram;
     @Value("${blog.email}")
@@ -23,6 +23,6 @@ public class InitService {
     private String copyrightFrom;
 
     public InitDTO getInit() {
-         return new InitDTO(title, subTitle, telegram, email, copyright, copyrightFrom);
+         return new InitDTO(title, subtitle, telegram, email, copyright, copyrightFrom);
     }
 }

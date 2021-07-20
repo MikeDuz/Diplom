@@ -1,5 +1,6 @@
 package skillbox.dto.init;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class InitDTO {
 
     private String title;
+    @JsonProperty("subtitle")
     private String subTitle;
     private String telegram;
     private String email;
