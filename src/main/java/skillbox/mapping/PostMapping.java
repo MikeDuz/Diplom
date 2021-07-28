@@ -11,7 +11,6 @@ import skillbox.entity.User;
 import skillbox.repository.PostCommentsRepository;
 import skillbox.repository.PostVotesRepository;
 import skillbox.repository.Tag2PostRepository;
-import skillbox.repository.UserRepository;
 import skillbox.util.DateConvertor;
 import skillbox.dto.Mode;
 import skillbox.util.PostPublic;
@@ -27,16 +26,15 @@ import static skillbox.dto.Mode.*;
 public class PostMapping {
 
 
-    public static PostDTO postMapping(PostDTO postDTO,
+    public static PostDto postMapping(PostDto postDTO,
                                       Page<Post> posts,
                                       PostVotesRepository postVotes,
                                       PostCommentsRepository postComment,
-                                      Mode param,
-                                      boolean isShort) {
+                                      Mode param) {
         List<PostInclude> includes = posts.stream().map(a -> createPostInclude(a,
                 postVotes,
-                postComment,
-                isShort)).filter(Objects::nonNull).collect(Collectors.toList());
+                postComment
+                )).filter(Objects::nonNull).collect(Collectors.toList());
         sortArray(includes, param);
         postDTO.setPosts(includes);
         return postDTO;
@@ -78,7 +76,7 @@ public class PostMapping {
 
     public static PostInclude createPostInclude(Post post,
                                                 PostVotesRepository postVotes,
-                                                PostCommentsRepository postComment, boolean isShort) {
+                                                PostCommentsRepository postComment) {
         if (PostPublic.postPublic(post)) {
             PostInclude postInclude = PostInclude.builder()
             .id(post.getId())
@@ -95,11 +93,11 @@ public class PostMapping {
         return null;
     }
 
-    public static SinglePostDTO createSinglePost(Post post,
+    public static SinglePostDto createSinglePost(Post post,
                                                  PostVotesRepository postVotes,
                                                  PostCommentsRepository postComment,
                                                  Tag2PostRepository tag2PostRepository) {
-        SinglePostDTO singlePost = new SinglePostDTO();
+        SinglePostDto singlePost = new SinglePostDto();
         singlePost.setId(post.getId());
         singlePost.setTimestamp(DateConvertor.getTimestamp(post.getTime()));
         singlePost.setActive(post.isActive());

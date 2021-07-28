@@ -1,6 +1,7 @@
 package skillbox.entity;
 
 import lombok.*;
+import skillbox.model.Role;
 
 
 import javax.persistence.*;
@@ -30,5 +31,9 @@ public class User {
     private String password;
     private String code;
     private String photo;
+
+    public Role getRole() {
+        return isModerator ? Role.MODERATOR : Role.USER;
+    }
 
 }

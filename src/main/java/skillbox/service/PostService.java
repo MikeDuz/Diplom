@@ -1,22 +1,23 @@
 package skillbox.service;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
 import skillbox.dto.Mode;
-import skillbox.dto.post.PostDTO;
-import skillbox.dto.post.SinglePostDTO;
-import skillbox.entity.Post;
+import skillbox.dto.post.PostDto;
+import skillbox.dto.post.SinglePostDto;
 
+import java.security.Principal;
 import java.text.ParseException;
 
 public interface PostService   {
 
-    PostDTO getPosts(int offset, int limit, Mode mode);
+    PostDto getPosts(int offset, int limit, Mode mode);
 
-    PostDTO searchPost(int offset, int limit, String query);
+    PostDto searchPost(int offset, int limit, String query);
 
-    PostDTO searchPostByTag(int offset, int limit, String tag);
+    PostDto searchPostByTag(int offset, int limit, String tag);
 
-    SinglePostDTO searchPostById(int postId);
+    SinglePostDto searchPostById(int postId);
 
-    PostDTO searchPostByDate(int offset, int limit, String strDate) throws ParseException;
+    PostDto searchPostByDate(int offset, int limit, String strDate) throws ParseException;
+
+    PostDto searchMyPosts(int offset, int limit, String status, Principal principal);
 }

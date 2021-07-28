@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import skillbox.entity.Post;
+import skillbox.entity.enums.ModerationStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,4 +40,17 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("select count(p.id) from Post p where p.text like concat('%', ?1, '%') or p.title like concat('%', ?1, '%')")
     int countAllByTitleContainsAndTextContains(String query);
 
+    int countAllByModerationStatus(ModerationStatus modStatus);
+
+    @Query("select count(p.userId.email) from Post p where p.userId.email = ?1 and p.isActive = ?2 and p.moderationStatus = ?3")
+    int countAllByModerationStatusAndActive(String email, boolean isActive, ModerationStatus modStatus);
+
+    @Query("select count(p.userId.email) from Post p where p.isActive = ?1 and p.userId.email = ?2")
+    int countMyPostByActive(boolean isActive, String email);
+
+    @Query("from Post p where p.userId.email = ?1 and p.isActive = ?2 and p.moderationStatus = ?3")
+    Page<Post> findMyPosts(String email, boolean isActive, ModerationStatus modStatus, Pageable paging);
+
+    @Query("from Post p where p.isActive = ?1 and p.userId.email = ?2")
+    Page<Post> findMyPostInactive(boolean isActive, String email, Pageable paging);
 }
