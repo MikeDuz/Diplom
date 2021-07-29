@@ -60,7 +60,7 @@ public class ApiPostController {
     }
 
     @GetMapping("/my")
-    @PreAuthorize("hasAuthority('user:write, user:moderate')")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
     public ResponseEntity<PostDto> searchMyPost(
         @RequestParam(required = false, defaultValue = "0") int offset,
         @RequestParam(required = false, defaultValue = "10") int limit,
