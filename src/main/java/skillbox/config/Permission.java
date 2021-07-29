@@ -1,4 +1,4 @@
-package skillbox.model;
+package skillbox.config;
 
 public enum Permission {
 

@@ -35,7 +35,7 @@ public class UserMapper {
                 .moderationCount(moderationCount)
                 .settings(settings)
                 .build();
-        dtoWrap.setObj(userResp);
+        dtoWrap.setUser(userResp);
         return dtoWrap;
     }
 

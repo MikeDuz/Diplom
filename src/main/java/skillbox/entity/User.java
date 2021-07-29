@@ -1,14 +1,13 @@
 package skillbox.entity;
 
 import lombok.*;
-import skillbox.model.Role;
+import skillbox.config.Role;
 
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

@@ -8,6 +8,6 @@ import lombok.Setter;
 public class DtoWrapper {
 
     boolean result;
-    Object obj;
+    Object user;
 
 }

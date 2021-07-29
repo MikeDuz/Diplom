@@ -56,16 +56,25 @@ public class ApiPostController {
                                                     @RequestParam(required = false, defaultValue = "10") int limit,
                                                     @RequestParam(required = true) String date) throws ParseException {
         return new ResponseEntity<>(postService.searchPostByDate(offset, limit, date), HttpStatus.OK);
-
     }
 
     @GetMapping("/my")
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
     public ResponseEntity<PostDto> searchMyPost(
-        @RequestParam(required = false, defaultValue = "0") int offset,
-        @RequestParam(required = false, defaultValue = "10") int limit,
-        @RequestParam(defaultValue = "published") String status,
-        Principal principal) {
-        return new ResponseEntity<PostDto>(postService.searchMyPosts(offset, limit, status, principal), HttpStatus.OK);
+            @RequestParam(required = false, defaultValue = "0") int offset,
+            @RequestParam(required = false, defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "published") String status,
+            Principal principal) {
+        return new ResponseEntity<>(postService.searchMyPosts(offset, limit, status, principal), HttpStatus.OK);
+    }
+
+    @GetMapping("/moderation")
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public ResponseEntity<PostDto> searchPostsForModeration(
+            @RequestParam(required = false, defaultValue = "0") int offset,
+            @RequestParam(required = false, defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "new") String status,
+            Principal principal) {
+        return new ResponseEntity<>(postService.searchModeratedPost(offset, limit, status, principal), HttpStatus.OK);
     }
 }

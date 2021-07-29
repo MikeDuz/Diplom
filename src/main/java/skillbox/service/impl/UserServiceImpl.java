@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         skillbox.entity.User userEntity = userRep
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
-        int count = 0;
+        int count = postRep.countAllByModerationStatusAndActive(email, true, ModerationStatus.NEW);
         if(!userEntity.isModerator()) {
             return UserMapper.mapUserToResponse(dtoWrap, userEntity, count, false);
         }

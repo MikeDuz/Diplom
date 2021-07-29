@@ -53,4 +53,12 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("from Post p where p.isActive = ?1 and p.userId.email = ?2")
     Page<Post> findMyPostInactive(boolean isActive, String email, Pageable paging);
+
+    @Query("select count(p.id) from Post p where p.isActive = ?1 and p.moderationStatus = ?2")
+    int countPostsByIsActiveAndModerationStatus(boolean isActive, ModerationStatus status);
+
+    @Query("from Post p where p.moderatorId.email = ?1 and p.isActive = ?2 and p.moderationStatus = ?3")
+    Page<Post> findPostByModeration(String email, boolean isActive, ModerationStatus modStatus, Pageable paging);
+
+    Page<Post> findAllByModerationStatus(ModerationStatus modStatus, Pageable paging);
 }

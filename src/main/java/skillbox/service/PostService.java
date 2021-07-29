@@ -20,4 +20,6 @@ public interface PostService   {
     PostDto searchPostByDate(int offset, int limit, String strDate) throws ParseException;
 
     PostDto searchMyPosts(int offset, int limit, String status, Principal principal);
+
+    PostDto searchModeratedPost(int offset, int limit, String status, Principal principal);
 }
