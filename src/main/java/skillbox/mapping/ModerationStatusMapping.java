@@ -2,7 +2,7 @@ package skillbox.mapping;
 
 import skillbox.entity.enums.ModerationStatus;
 
-public class MapModerationStatus {
+public class ModerationStatusMapping {
 
     public static ModerationStatus mapModStatus( String status) {
         switch (status) {

@@ -8,43 +8,52 @@ import skillbox.entity.Post;
 import skillbox.entity.PostComments;
 import skillbox.entity.Tag2Post;
 import skillbox.entity.User;
+import skillbox.entity.enums.ModerationStatus;
+import skillbox.entity.projection.PostProjection;
 import skillbox.repository.PostCommentsRepository;
 import skillbox.repository.PostVotesRepository;
 import skillbox.repository.Tag2PostRepository;
+import skillbox.repository.UserRepository;
 import skillbox.util.DateConvertor;
-import skillbox.dto.Mode;
-import skillbox.util.PostPublic;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static skillbox.dto.Mode.*;
 
 @RequiredArgsConstructor
 public class PostMapping {
 
+    private final static UserRepository userRep = null;
+
 
     public static PostDto postMapping(PostDto postDTO,
-                                      Page<Post> posts,
-                                      PostVotesRepository postVotes,
-                                      PostCommentsRepository postComment,
-                                      Mode param) {
-        List<PostInclude> includes = posts.stream().map(a -> createPostInclude(a,
-                postVotes,
-                postComment
-                )).filter(Objects::nonNull).collect(Collectors.toList());
-        sortArray(includes, param);
+                                      List<PostProjection> posts) {
+        List<PostInclude> includes = posts.stream().map(a -> createPostInclude(a))
+                .filter(Objects::nonNull).collect(Collectors.toList());
         postDTO.setPosts(includes);
         return postDTO;
     }
 
-    private static PostUser postUserSet(Post a) {
-        PostUser user = new PostUser();
-        user.setId(a.getUserId().getId());
-        user.setName(a.getUserId().getName());
-        return user;
+    public static Post insertUserMapper(LocalDateTime time, PostRequest postRequest, User user) {
+        Post post = new Post();
+        post.setActive((postRequest.getActive() == 1) ?  true : false);
+        post.setModerationStatus(ModerationStatus.NEW);
+        post.setUserId(user);
+        post.setTime(time);
+        post.setTitle(postRequest.getTitle());
+        post.setText(postRequest.getText());
+        post.setViewCount(0);
+        return post;
+    }
+
+    private static PostUser postUserSet(User user) {
+        PostUser postUser = new PostUser();
+        user.setId(user.getId());
+        user.setName(user.getName());
+        return postUser;
     }
 
     private static String createAnnounce(String postText) {
@@ -59,38 +68,19 @@ public class PostMapping {
         return "error";
     }
 
-    private static void sortArray(List<PostInclude> postInclude, Mode param) {
-        if (param.equals(recent)) {
-            postInclude.sort(Comparator.comparing(PostInclude::getTimeStamp).reversed());
-        }
-        if (param.equals(popular)) {
-            postInclude.sort(Comparator.comparing(PostInclude::getCommentCount).reversed());
-        }
-        if (param.equals(best)) {
-            postInclude.sort(Comparator.comparing(PostInclude::getLikeCount).reversed());
-        }
-        if (param.equals(early)) {
-            postInclude.sort(Comparator.comparing(PostInclude::getTimeStamp));
-        }
-    }
 
-    public static PostInclude createPostInclude(Post post,
-                                                PostVotesRepository postVotes,
-                                                PostCommentsRepository postComment) {
-        if (PostPublic.postPublic(post)) {
+    public static PostInclude createPostInclude(PostProjection post) {
             PostInclude postInclude = PostInclude.builder()
             .id(post.getId())
             .timeStamp(DateConvertor.getTimestamp(post.getTime()))
             .title(post.getTitle())
             .viewCount(post.getViewCount())
-            .likeCount(postVotes.findAllLike(1, post.getId()))
-            .dislikeCount(postVotes.findAllLike(-1, post.getId()))
-            .commentCount(postComment.findAllById(Collections.singleton(post.getId())).size())
-            .user(postUserSet(post))
+            .likeCount(post.getLikeCount())
+            .dislikeCount(post.getDislikeCount())
+            .commentCount(post.getCommentCount())
+            .user(postUserSet(post.getUser()))
             .announce(createAnnounce(post.getText())).build();
             return postInclude;
-        }
-        return null;
     }
 
     public static SinglePostDto createSinglePost(Post post,
@@ -101,7 +91,7 @@ public class PostMapping {
         singlePost.setId(post.getId());
         singlePost.setTimestamp(DateConvertor.getTimestamp(post.getTime()));
         singlePost.setActive(post.isActive());
-        singlePost.setUser(postUserSet(post));
+        singlePost.setUser(postUserSet(post.getUserId()));
         singlePost.setTitle(post.getTitle());
         singlePost.setText(post.getText());
         singlePost.setLikeCount(postVotes.findAllLike(1, post.getId()));

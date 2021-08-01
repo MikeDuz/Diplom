@@ -1,7 +1,7 @@
 package skillbox.mapping;
 
 import skillbox.config.SecurityConfig;
-import skillbox.dto.DtoWrapper;
+import skillbox.dto.userDto.UserWrapper;
 import skillbox.dto.userDto.RegisterDto;
 import skillbox.dto.userDto.UserLoginResponse;
 import skillbox.entity.User;
@@ -21,10 +21,10 @@ public class UserMapper {
         return user;
     }
 
-    public static DtoWrapper mapUserToResponse(DtoWrapper dtoWrap,
-                                               User user,
-                                               int moderationCount,
-                                               boolean settings) {
+    public static UserWrapper mapUserToResponse(UserWrapper dtoWrap,
+                                                User user,
+                                                int moderationCount,
+                                                boolean settings) {
         dtoWrap.setResult(true);
         UserLoginResponse userResp = UserLoginResponse.builder()
                 .id(user.getId())

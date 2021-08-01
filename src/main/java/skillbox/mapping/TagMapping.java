@@ -2,7 +2,7 @@ package skillbox.mapping;
 
 import skillbox.dto.tag.TagDTO;
 import skillbox.dto.tag.TagContain;
-import skillbox.repository.TagPostCount;
+import skillbox.entity.projection.TagPostCount;
 import skillbox.repository.TagRepository;
 
 

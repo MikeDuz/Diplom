@@ -1,4 +1,4 @@
-package skillbox.repository;
+package skillbox.entity.projection;
 
 public interface TagPostCount {
     int getTagId();

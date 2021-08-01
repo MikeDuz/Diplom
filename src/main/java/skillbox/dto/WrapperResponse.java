@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DtoWrapper {
+public class WrapperResponse {
 
     boolean result;
-    Object user;
-
+    Object errors;
 }

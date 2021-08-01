@@ -7,7 +7,7 @@ import skillbox.entity.Tags;
 import skillbox.mapping.TagMapping;
 import skillbox.repository.PostRepository;
 import skillbox.repository.Tag2PostRepository;
-import skillbox.repository.TagPostCount;
+import skillbox.entity.projection.TagPostCount;
 import skillbox.repository.TagRepository;
 
 import java.util.ArrayList;

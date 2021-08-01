@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import skillbox.dto.WrapperResponse;
+import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.PostDto;
-import skillbox.dto.Mode;
 import skillbox.dto.post.SinglePostDto;
 import skillbox.service.impl.PostServiceImpl;
 import skillbox.service.impl.TagService;
@@ -27,7 +28,7 @@ public class ApiPostController {
     @GetMapping()
     public PostDto getPost(@RequestParam(required = false, defaultValue = "0") int offset,
                            @RequestParam(required = false, defaultValue = "10") int limit,
-                           @RequestParam(defaultValue = "recent") Mode mode) {
+                           @RequestParam(defaultValue = "recent") String mode) {
         return postService.getPosts(offset, limit, mode);
 
     }
@@ -76,5 +77,12 @@ public class ApiPostController {
             @RequestParam(defaultValue = "new") String status,
             Principal principal) {
         return new ResponseEntity<>(postService.searchModeratedPost(offset, limit, status, principal), HttpStatus.OK);
+    }
+
+    @PostMapping()
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<WrapperResponse> publicPost(@RequestBody PostRequest postRequest,
+                                                      Principal principal) {
+        return new ResponseEntity<>(postService.insertPost(postRequest, principal), HttpStatus.OK);
     }
 }

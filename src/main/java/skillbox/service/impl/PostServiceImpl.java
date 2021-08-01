@@ -4,14 +4,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import skillbox.dto.Mode;
+import skillbox.dto.WrapperResponse;
+import skillbox.dto.post.ErrorResponse;
 import skillbox.dto.post.PostDto;
+import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.SinglePostDto;
 import skillbox.entity.Post;
+import skillbox.entity.User;
 import skillbox.entity.enums.ModerationStatus;
-import skillbox.mapping.MapModerationStatus;
+import skillbox.entity.projection.PostProjection;
+import skillbox.mapping.ModerationStatusMapping;
 import skillbox.mapping.PostMapping;
 import skillbox.repository.*;
 import skillbox.service.PostService;
@@ -29,7 +35,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static skillbox.dto.Mode.recent;
 
 @Service
 @RequiredArgsConstructor
@@ -42,20 +47,22 @@ public class PostServiceImpl implements PostService {
     private final Tag2PostRepository tag2PostRepository;
     private final UserRepository userRep;
 
+    public static int TITLE_LENGTH = 3;
+    public static int TEXT_LENGTH = 50;
+    public static String DEFAULT_MODE = "recent";
+
     @Override
     @Transactional
-    public PostDto getPosts(int offset, int limit, Mode mode) {
+    public PostDto getPosts(int offset, int limit, String mode) {
         PostDto postDTO = new PostDto();
-        int postCount = (int) postRep.count();
+        int postCount = postRep.countPosts(ModerationStatus.ACCEPTED, true, LocalDateTime.now(ZoneOffset.UTC));
         postDTO.setCount(postCount);
-        int pageNumber = SetPageNumber.setPage(offset, limit);
-        limit = SetLimit.setLimit(offset, limit, postCount);
         if (postCount == 0) {
             return postDTO;
         }
-        Pageable paging = PageRequest.of(pageNumber, limit);
-        Page<Post> posts = postRep.findAll(LocalDateTime.now(ZoneOffset.UTC), paging);
-        return PostMapping.postMapping(postDTO, posts, postVotes, postComment, mode);
+        Pageable paging = getPageable(offset, limit, postCount, mode);
+        List<PostProjection> posts = postRep.getPosts(ModerationStatus.ACCEPTED, true, LocalDateTime.now(ZoneOffset.UTC), paging);
+        return PostMapping.postMapping(postDTO, posts);
     }
 
     @Override
@@ -69,16 +76,14 @@ public class PostServiceImpl implements PostService {
             return postDTO;
         }
         int count = postRep.countAllByTitleContainsAndTextContains(query);
-        int pageNumber = SetPageNumber.setPage(offset, limit);
-        limit = SetLimit.setLimit(offset, limit, count);
-        Pageable paging = PageRequest.of(pageNumber, limit);
-        Page<Post> queryPosts = postRep.findAllByTextContainsOrTitleContains(query, paging);
-        if (queryPosts.getSize() == 0) {
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);;
+        List<PostProjection> queryPosts = postRep.findAllByTextContainsOrTitleContains(query, paging);
+        if (queryPosts.size() == 0) {
             postDTO.setCount(0);
             return postDTO;
         }
         postDTO.setCount(count);
-        return PostMapping.postMapping(postDTO, queryPosts, postVotes, postComment, recent);
+        return PostMapping.postMapping(postDTO, queryPosts);
     }
 
     @Override
@@ -89,10 +94,10 @@ public class PostServiceImpl implements PostService {
         if (count == 0) {
             return setCountZero(posts);
         }
-        Pageable paging = getPageable(offset, limit, count);;
-        Page<Post> postByTag = tag2PostRepository.findPostByTag(tag, paging);
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+        List<PostProjection> postByTag = tag2PostRepository.findPostByTag(tag, paging);
         posts.setCount(count);
-        return PostMapping.postMapping(posts, postByTag, postVotes, postComment, recent);
+        return PostMapping.postMapping(posts, postByTag);
     }
 
     @Override
@@ -117,10 +122,10 @@ public class PostServiceImpl implements PostService {
         if (count == 0) {
             return setCountZero(posts);
         }
-        Pageable paging = getPageable(offset, limit, count);
-        Page<Post> page = postRep.findAllByTime(date, paging);
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+        List<PostProjection> page = postRep.findAllByTime(date, paging);
         posts.setCount(count);
-        return PostMapping.postMapping(posts, page, postVotes, postComment, recent);
+        return PostMapping.postMapping(posts, page);
     }
 
     @Override
@@ -146,30 +151,62 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostDto searchModeratedPost(int offset, int limit, String status, Principal principal) {
-        ModerationStatus modStatus = MapModerationStatus.mapModStatus(status);
+        ModerationStatus modStatus = ModerationStatusMapping.mapModStatus(status);
         PostDto posts = new PostDto();
-        if(modStatus.equals(ModerationStatus.NEW)) {
+        if (modStatus.equals(ModerationStatus.NEW)) {
             boolean isActive = true;
             int count = postRep.countPostsByIsActiveAndModerationStatus(isActive, modStatus);
             if (count == 0) {
                 return setCountZero(posts);
             }
             posts.setCount(count);
-            Pageable paging = getPageable(offset, limit, count);
-            Page<Post> postMod = postRep.findAllByModerationStatus(modStatus, paging);
-            return  PostMapping.postMapping(posts, postMod, postVotes, postComment, recent);
+            Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+            List<PostProjection> postMod = postRep.getPosts(modStatus, true, LocalDateTime.now(ZoneOffset.UTC), paging);;
+            return PostMapping.postMapping(posts, postMod);
         }
         String email = principal.getName();
         boolean flag = false;
         return myPosts(posts, offset, limit, modStatus, email, flag);
     }
 
+    @Override
+    @Transactional
+    public WrapperResponse insertPost(PostRequest postRequest, Principal principal) {
+        WrapperResponse wrapResp = new WrapperResponse();
+        User user = userRep.findByEmail(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        LocalDateTime time;
+        if (postRequest.getTitle().length() < TITLE_LENGTH) {
+            ErrorResponse error = new ErrorResponse();
+            error.setTitle("Слишком короткий заголовок");
+            wrapResp.setErrors(error);
+            wrapResp.setResult(false);
+            return wrapResp;
+        }
+        if (postRequest.getText().length() < TEXT_LENGTH) {
+            ErrorResponse error = new ErrorResponse();
+            error.setText("Мало текста");
+            wrapResp.setErrors(error);
+            wrapResp.setResult(false);
+            return wrapResp;
+        }
+        if (postRequest.getTimestamp().toLocalDateTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+            time = LocalDateTime.now(ZoneOffset.UTC);
+        } else {
+            time = LocalDateTime.from(postRequest.getTimestamp().toLocalDateTime().atZone(ZoneOffset.UTC));
+        }
+        postRep.save(PostMapping.insertUserMapper(time, postRequest, user));
+        wrapResp.setResult(true);
+        return wrapResp;
+    }
+
     private PostDto myPosts(PostDto posts, int offset, int limit, ModerationStatus modStatus, String email, boolean flag) {
         boolean isActive = true;
         int count;
-        Page<Post> postPage;
-        if(flag) {
+        List<PostProjection> postPage;
+        if (flag) {
             count = postRep.countAllByModerationStatusAndActive(email, isActive, modStatus);
         } else {
             count = postRep.countPostsByIsActiveAndModerationStatus(isActive, modStatus);
@@ -178,45 +215,47 @@ public class PostServiceImpl implements PostService {
             return setCountZero(posts);
         }
         posts.setCount(count);
-        Pageable paging = getPageable(offset, limit, count);
-        if(flag) {
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+        if (flag) {
             postPage = postRep.findMyPosts(email, isActive, modStatus, paging);
         } else {
             postPage = postRep.findPostByModeration(email, isActive, modStatus, paging);
         }
-        return PostMapping.postMapping(posts, postPage, postVotes, postComment, recent);
+        return PostMapping.postMapping(posts, postPage);
     }
 
     private PostDto setCountZero(PostDto posts) {
-            posts.setCount(0);
-            posts.setPosts(List.of());
-            return posts;
+        posts.setCount(0);
+        posts.setPosts(List.of());
+        return posts;
     }
 
-    private Pageable getPageable(int offset, int limit, int count) {
+    private Pageable getPageable(int offset, int limit, int count, String mode) {
         int pageNumber = SetPageNumber.setPage(offset, limit);
         limit = SetLimit.setLimit(offset, limit, count);
-        Pageable paging = PageRequest.of(pageNumber, limit);
-        return paging;
+        switch (mode) {
+            case("recent"):
+                return PageRequest.of(pageNumber, limit, Sort.by("time").descending());
+            case("popular"):
+                return PageRequest.of(pageNumber, limit, Sort.by("commentCount").descending());
+            case("best"):
+                return PageRequest.of(pageNumber, limit, Sort.by("likeCount").descending());
+            case("early"):
+                PageRequest.of(pageNumber, limit, Sort.by("time"));
+        }
+        return PageRequest.of(pageNumber, limit, Sort.by("time"));
     }
 
     private PostDto myInactivePosts(PostDto posts, int offset, int limit, String email) {
         boolean isActive = false;
         int count = postRep.countMyPostByActive(isActive, email);
-        if(count == 0) {
+        if (count == 0) {
             posts.setCount(count);
             posts.setPosts(List.of());
             return posts;
         }
-        int pageNumber = SetPageNumber.setPage(offset, limit);
-        limit = SetLimit.setLimit(offset, limit, count);
-        Pageable paging = PageRequest.of(pageNumber, limit);
-        Page<Post> inactivePosts = postRep.findMyPostInactive(isActive, email, paging);
-        return PostMapping.postMapping(posts, inactivePosts, postVotes, postComment, recent);
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+        List<PostProjection> inactivePosts = postRep.findMyPosts(email, isActive, ModerationStatus.NEW, paging);
+        return PostMapping.postMapping(posts, inactivePosts);
     }
-
-
-
-
-
 }

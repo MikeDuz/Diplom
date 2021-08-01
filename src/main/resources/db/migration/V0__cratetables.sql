@@ -24,7 +24,7 @@ create table posts (
 id integer primary key auto_increment not null,
 is_active bit not null,
 moderation_status enum('NEW','ACCEPTED','DECLINED') not null,
-moderator_id integer not null, text text not null,
+moderator_id integer, text text not null,
 time timestamp not null, title varchar(255) not null,
 user_id integer not null,
 view_count integer not null,
