@@ -1,10 +1,10 @@
 package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +14,7 @@ import skillbox.dto.post.PostDto;
 import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.SinglePostDto;
 import skillbox.entity.Post;
+import skillbox.entity.Tag;
 import skillbox.entity.User;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.entity.projection.PostProjection;
@@ -32,6 +33,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +45,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRep;
     private final PostVotesRepository postVotes;
     private final PostCommentsRepository postComment;
-    private final TagRepository tagRepository;
+    private final TagRepository tagRep;
     private final Tag2PostRepository tag2PostRepository;
     private final UserRepository userRep;
 
@@ -76,7 +78,8 @@ public class PostServiceImpl implements PostService {
             return postDTO;
         }
         int count = postRep.countAllByTitleContainsAndTextContains(query);
-        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);;
+        Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
+        ;
         List<PostProjection> queryPosts = postRep.findAllByTextContainsOrTitleContains(query, paging);
         if (queryPosts.size() == 0) {
             postDTO.setCount(0);
@@ -103,13 +106,13 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public SinglePostDto searchPostById(int postId) {
-        Post post = postRep.getOne(postId);
-        SinglePostDto postDTO = new SinglePostDto();
+        Post post = postRep.findPostById(postId);
+        SinglePostDto postDTO = SinglePostDto.builder().build();
         if (!PostPublic.postPublic(post)) {
             return postDTO;
         }
         postRep.incrViewCount(postId);
-        return PostMapping.createSinglePost(post, postVotes, postComment, tag2PostRepository);
+        return PostMapping.createSinglePost(post, postVotes);
     }
 
     @Override
@@ -163,7 +166,8 @@ public class PostServiceImpl implements PostService {
             }
             posts.setCount(count);
             Pageable paging = getPageable(offset, limit, count, DEFAULT_MODE);
-            List<PostProjection> postMod = postRep.getPosts(modStatus, true, LocalDateTime.now(ZoneOffset.UTC), paging);;
+            List<PostProjection> postMod = postRep.getPosts(modStatus, true, LocalDateTime.now(ZoneOffset.UTC), paging);
+            ;
             return PostMapping.postMapping(posts, postMod);
         }
         String email = principal.getName();
@@ -173,11 +177,79 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
+    @Modifying
     public WrapperResponse insertPost(PostRequest postRequest, Principal principal) {
+        WrapperResponse wrapperResponse = wrapPostResponse(postRequest);
+        if (wrapperResponse.isResult()) {
+            User user = userRep.findByEmail(principal.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+            postRep.save(postForInsert(postRequest, user, ModerationStatus.NEW));
+        }
+        return wrapperResponse;
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public WrapperResponse changePost(int postId, PostRequest postRequest, Principal principal) {
+        WrapperResponse wrapperResponse = wrapPostResponse(postRequest);
+        if (wrapperResponse.isResult()) {
+            LocalDateTime time = setTime(postRequest);
+            boolean isActive = postRequest.getActive() == 1;
+            Post post = postRep.findById(postId).get();
+            ModerationStatus modStatus = setModerationStatus(principal, post);
+            insertTagToPost(postRequest, post);
+            Set<Tag> tagSet = post.getTags();
+            System.out.println();
+            postRep.updatePostWithModStatus(postId,
+                    time,
+                    isActive,
+                    modStatus,
+                    postRequest.getTitle(),
+                    tagSet,
+                    postRequest.getText());
+        }
+        return wrapperResponse;
+    }
+
+    private void insertTagToPost(PostRequest postRequest, Post post) {
+        post.getTags().forEach(t -> {
+            if (!postRequest.getTags().contains(t.getName())) {
+                post.getTags().remove(t);
+            } else {
+                postRequest.getTags().remove(t.getName());
+            }
+        });
+        postRequest.getTags().forEach(s -> tagMapper(s, post));
+    }
+
+    private ModerationStatus setModerationStatus(Principal principal, Post post) {
+        ModerationStatus modStatus;
+        if (principal.getName().equals(post.getUserId().getEmail())) {
+            modStatus = ModerationStatus.NEW;
+        } else {
+            modStatus = post.getModerationStatus();
+        }
+        return modStatus;
+    }
+
+    private Post postForInsert(PostRequest postRequest, User user, ModerationStatus modStatus) {
+        LocalDateTime time = setTime(postRequest);
+        Post post = new Post();
+        getTagsForPost(postRequest, post);
+        post = PostMapping.insertPostMapper(time, postRequest, user, post, modStatus);
+        return post;
+    }
+
+    private LocalDateTime setTime(PostRequest postRequest) {
+        if (postRequest.getTimestamp().toLocalDateTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+            return LocalDateTime.now(ZoneOffset.UTC);
+        }
+        return LocalDateTime.from(postRequest.getTimestamp().toLocalDateTime().atZone(ZoneOffset.UTC));
+    }
+
+    private WrapperResponse wrapPostResponse(PostRequest postRequest) {
         WrapperResponse wrapResp = new WrapperResponse();
-        User user = userRep.findByEmail(principal.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
-        LocalDateTime time;
         if (postRequest.getTitle().length() < TITLE_LENGTH) {
             ErrorResponse error = new ErrorResponse();
             error.setTitle("Слишком короткий заголовок");
@@ -192,12 +264,6 @@ public class PostServiceImpl implements PostService {
             wrapResp.setResult(false);
             return wrapResp;
         }
-        if (postRequest.getTimestamp().toLocalDateTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
-            time = LocalDateTime.now(ZoneOffset.UTC);
-        } else {
-            time = LocalDateTime.from(postRequest.getTimestamp().toLocalDateTime().atZone(ZoneOffset.UTC));
-        }
-        postRep.save(PostMapping.insertUserMapper(time, postRequest, user));
         wrapResp.setResult(true);
         return wrapResp;
     }
@@ -234,13 +300,13 @@ public class PostServiceImpl implements PostService {
         int pageNumber = SetPageNumber.setPage(offset, limit);
         limit = SetLimit.setLimit(offset, limit, count);
         switch (mode) {
-            case("recent"):
+            case ("recent"):
                 return PageRequest.of(pageNumber, limit, Sort.by("time").descending());
-            case("popular"):
+            case ("popular"):
                 return PageRequest.of(pageNumber, limit, Sort.by("commentCount").descending());
-            case("best"):
+            case ("best"):
                 return PageRequest.of(pageNumber, limit, Sort.by("likeCount").descending());
-            case("early"):
+            case ("early"):
                 PageRequest.of(pageNumber, limit, Sort.by("time"));
         }
         return PageRequest.of(pageNumber, limit, Sort.by("time"));
@@ -258,4 +324,22 @@ public class PostServiceImpl implements PostService {
         List<PostProjection> inactivePosts = postRep.findMyPosts(email, isActive, ModerationStatus.NEW, paging);
         return PostMapping.postMapping(posts, inactivePosts);
     }
+
+    private void getTagsForPost(PostRequest postRequest, Post post) {
+        postRequest.getTags()
+                .forEach(a -> tagMapper(a, post));
+    }
+
+    private Tag tagMapper(String name, Post post) {
+        Tag tag = new Tag();
+        if (tagRep.existsByName(name)) {
+            tag = tagRep.findOneByName(name);
+        } else {
+            tag.setName(name);
+        }
+        tag.addPost(post);
+        post.addTags(tag);
+        return tag;
+    }
+
 }

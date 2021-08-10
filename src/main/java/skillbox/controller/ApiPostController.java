@@ -10,8 +10,9 @@ import skillbox.dto.WrapperResponse;
 import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.PostDto;
 import skillbox.dto.post.SinglePostDto;
+import skillbox.service.PostService;
 import skillbox.service.impl.PostServiceImpl;
-import skillbox.service.impl.TagService;
+import skillbox.service.impl.TagServiceImpl;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -22,34 +23,33 @@ import java.text.ParseException;
 @Log4j2
 public class ApiPostController {
 
-    private final PostServiceImpl postService;
-    private final TagService tagService;
+    private final PostService postService;
 
     @GetMapping()
-    public PostDto getPost(@RequestParam(required = false, defaultValue = "0") int offset,
-                           @RequestParam(required = false, defaultValue = "10") int limit,
-                           @RequestParam(defaultValue = "recent") String mode) {
-        return postService.getPosts(offset, limit, mode);
+    public ResponseEntity<PostDto> getPost(@RequestParam(required = false, defaultValue = "0") int offset,
+                                           @RequestParam(required = false, defaultValue = "10") int limit,
+                                           @RequestParam(defaultValue = "recent") String mode) {
+        return new ResponseEntity<>(postService.getPosts(offset, limit, mode), HttpStatus.OK);
 
     }
 
     @GetMapping("/search")
-    public PostDto searchPost(@RequestParam(required = false, defaultValue = "0") int offset,
-                              @RequestParam(required = false, defaultValue = "10") int limit,
-                              @RequestParam(defaultValue = "") String query) {
-        return postService.searchPost(offset, limit, query);
+    public ResponseEntity<PostDto> searchPost(@RequestParam(required = false, defaultValue = "0") int offset,
+                                              @RequestParam(required = false, defaultValue = "10") int limit,
+                                              @RequestParam(defaultValue = "") String query) {
+        return new ResponseEntity<>(postService.searchPost(offset, limit, query), HttpStatus.OK);
     }
 
     @GetMapping("/byTag")
-    public PostDto searchPostByTag(@RequestParam(required = false, defaultValue = "0") int offset,
-                                   @RequestParam(required = false, defaultValue = "10") int limit,
-                                   @RequestParam(defaultValue = "") String tag) {
-        return postService.searchPostByTag(offset, limit, tag);
+    public ResponseEntity<PostDto> searchPostByTag(@RequestParam(required = false, defaultValue = "0") int offset,
+                                                   @RequestParam(required = false, defaultValue = "10") int limit,
+                                                   @RequestParam(defaultValue = "") String tag) {
+        return new ResponseEntity<>(postService.searchPostByTag(offset, limit, tag), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public SinglePostDto searchPostById(@PathVariable("id") int postId) {
-        return postService.searchPostById(postId);
+    public ResponseEntity<SinglePostDto> searchPostById(@PathVariable("id") int postId) {
+        return new ResponseEntity<>(postService.searchPostById(postId), HttpStatus.OK);
     }
 
     @GetMapping("/byDate")
@@ -84,5 +84,14 @@ public class ApiPostController {
     public ResponseEntity<WrapperResponse> publicPost(@RequestBody PostRequest postRequest,
                                                       Principal principal) {
         return new ResponseEntity<>(postService.insertPost(postRequest, principal), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<WrapperResponse> editPost(
+            @PathVariable("id") int postId,
+            @RequestBody PostRequest postRequest,
+            Principal principal) {
+        return new ResponseEntity<>(postService.changePost(postId, postRequest, principal), HttpStatus.OK);
     }
 }

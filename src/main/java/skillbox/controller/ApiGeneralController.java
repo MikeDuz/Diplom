@@ -14,7 +14,7 @@ import skillbox.dto.tag.TagDTO;
 import skillbox.service.impl.CalendarService;
 import skillbox.service.impl.InitService;
 import skillbox.service.impl.SettingsService;
-import skillbox.service.impl.TagService;
+import skillbox.service.impl.TagServiceImpl;
 
 @RestController
 @RequestMapping("/api/")
@@ -23,7 +23,7 @@ public class ApiGeneralController {
 
     private final InitService initResponse;
     private final SettingsService settingsService;
-    private final TagService tagService;
+    private final TagServiceImpl tagService;
     private final CalendarService calendarService;
 
     @GetMapping("init")

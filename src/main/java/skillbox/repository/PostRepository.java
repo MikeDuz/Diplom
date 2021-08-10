@@ -1,6 +1,5 @@
 package skillbox.repository;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,13 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import skillbox.entity.Post;
+import skillbox.entity.Tag;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.entity.projection.PostProjection;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
@@ -24,11 +24,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.title as title, " +
             "p.text as text, " +
             "p.viewCount as viewCount, " +
+            "p.comments.size as commentCount, " +
             "(select count(v.value) as likeCount from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
-            "(select count(v.value) as dislikeCount from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) as commentCount from PostComments c where c.postId.id = p.id) as commentCount " +
-            "from Post p " +
-            "where p.moderationStatus = ?1 and p.isActive = ?2 and p.time < ?3")
+            "(select count(v.value) as dislikeCount from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount " +
+            "from Post p where p.moderationStatus = ?1 and p.isActive = ?2 and p.time < ?3")
     List<PostProjection> getPosts(ModerationStatus modStatus, boolean isActive, LocalDateTime time, Pageable page);
 
     @Query("select count(p.id) from Post p where p.moderationStatus = ?1 and p.isActive = ?2 and p.time < ?3")
@@ -50,7 +49,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.viewCount as viewCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) from PostComments c where c.postId.id = p.id) as commentCount " +
+            "p.comments.size as commentCount " +
             "from Post p where date(p.time) = ?1")
     List<PostProjection> findAllByTime(Date date, Pageable paging);
 
@@ -65,10 +64,12 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.viewCount as viewCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) from PostComments c where c.postId.id = p.id) as commentCount " +
+            "p.comments.size as commentCount " +
             "from Post p " +
             "where p.text like concat('%', ?1, '%') or p.title like concat('%', ?1, '%')")
     List<PostProjection> findAllByTextContainsOrTitleContains(String query, Pageable paging);
+
+    Post findPostById(int id);
 
     @Query("select count(p.id) from Post p where p.text like concat('%', ?1, '%') or p.title like concat('%', ?1, '%')")
     int countAllByTitleContainsAndTextContains(String query);
@@ -89,7 +90,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.viewCount as viewCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) from PostComments c where c.postId.id = p.id) as commentCount " +
+            "p.comments.size as commentCount " +
             "from Post p " +
             "where p.userId.email = ?1 and " +
             "p.isActive = ?2 and " +
@@ -107,7 +108,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.viewCount as viewCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) from PostComments c where c.postId.id = p.id) as commentCount " +
+            "p.comments.size as commentCount " +
             "from Post p " +
             "where p.moderatorId.email = ?1 and " +
             "p.isActive = ?2 and " +
@@ -122,10 +123,31 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "p.viewCount as viewCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value > 0) as likeCount, " +
             "(select count(v.value) from PostVotes v where v.postId.id = p.id and v.value < 0) as dislikeCount, " +
-            "(select count(c.id) from PostComments c where c.postId.id = p.id) as commentCount " +
+            "p.comments.size as commentCount " +
             "from Post p " +
             "where p.moderationStatus = ?1")
     List<PostProjection> findAllByModerationStatus(ModerationStatus modStatus, Pageable paging);
 
+    @Query("select p.userId.email from Post p where p.id = ?1")
+    String findEmailById(int postId);
+
+    @Modifying
+    @Transactional
+    @Query("update Post set " +
+            "time = :time, " +
+            "isActive = :active, " +
+            "title = :title, " +
+            "text = :text, " +
+            "tags = :tags, " +
+            "moderationStatus = :modStatus " +
+            "where id = :id")
+    void updatePostWithModStatus(
+            @Param("id") int id,
+            @Param("time") LocalDateTime time,
+            @Param("active") boolean isActive,
+            @Param("modStatus") ModerationStatus modStatus,
+            @Param("title") String title,
+            @Param("tags") Set<Tag> tags,
+            @Param("text") String text);
 
 }

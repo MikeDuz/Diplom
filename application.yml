@@ -5,7 +5,7 @@ spring:
     password: test4321
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
       connection:
         charset: utf8
         useUnicode: true

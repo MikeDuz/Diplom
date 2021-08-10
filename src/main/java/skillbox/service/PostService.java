@@ -4,6 +4,7 @@ import skillbox.dto.WrapperResponse;
 import skillbox.dto.post.PostDto;
 import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.SinglePostDto;
+import skillbox.entity.enums.ModerationStatus;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -25,4 +26,6 @@ public interface PostService   {
     PostDto searchModeratedPost(int offset, int limit, String status, Principal principal);
 
     WrapperResponse insertPost(PostRequest postRequest, Principal principal);
+
+    WrapperResponse changePost(int postId, PostRequest postRequest, Principal principal);
 }

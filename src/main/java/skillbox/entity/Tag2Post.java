@@ -22,5 +22,5 @@ public class Tag2Post {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "tag_id", referencedColumnName = "id")
     @NotNull
-    private Tags tagId;
+    private Tag tagId;
 }
