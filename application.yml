@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:${CLEARDB_DATABASE_URL}?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
+    url: jdbc:${JAWSDB_URL}?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
   jpa:
