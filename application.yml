@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://${CLEARDB_DATABASE_URL}?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
+    url: jdbc:${CLEARDB_DATABASE_URL}?serverTimezone=UTC#?allowPublicKeyRetrieval=true&amp;shutdown=true&amp;useSSL=false
     username: ${RDS_USERNAME}
-    password: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: validate
