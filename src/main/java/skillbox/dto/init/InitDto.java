@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class InitDTO {
+public class InitDto {
 
     private String title;
     @JsonProperty("subtitle")
@@ -17,7 +17,7 @@ public class InitDTO {
     private String copyright;
     private String copyrightFrom;
 
-    public InitDTO(String title, String subTitle, String telegram, String email, String copyright, String copyrightFrom) {
+    public InitDto(String title, String subTitle, String telegram, String email, String copyright, String copyrightFrom) {
         this.title = title;
         this.subTitle = subTitle;
         this.telegram = telegram;

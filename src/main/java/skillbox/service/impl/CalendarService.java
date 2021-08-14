@@ -2,7 +2,7 @@ package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import skillbox.dto.calendar.CalendarDTO;
+import skillbox.dto.calendar.CalendarDto;
 import skillbox.repository.PostRepository;
 
 import java.time.format.DateTimeFormatter;
@@ -15,7 +15,7 @@ public class CalendarService {
 
     private final PostRepository postRepository;
 
-    public CalendarDTO getCalendar(int year) {
+    public CalendarDto getCalendar(int year) {
         if (year == 0) {
             year = LocalDateTime.now().getYear();
         }
@@ -34,7 +34,7 @@ public class CalendarService {
                 postByDate.putIfAbsent(date, 1);
             }
         }
-        CalendarDTO calendarDTO = new CalendarDTO();
+        CalendarDto calendarDTO = new CalendarDto();
         calendarDTO.setYears(yearRequest);
         calendarDTO.setPosts(postByDate);
         return calendarDTO;

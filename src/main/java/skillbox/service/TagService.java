@@ -1,9 +1,9 @@
 package skillbox.service;
 
-import skillbox.dto.tag.TagDTO;
+import skillbox.dto.tag.TagDto;
 
 public interface TagService {
 
-    TagDTO getTag(String query);
+    TagDto getTag(String query);
 
 }

@@ -7,12 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import skillbox.dto.WrapperResponse;
-import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.PostDto;
 import skillbox.dto.post.SinglePostDto;
+import skillbox.dto.LikeAndModeration;
 import skillbox.service.PostService;
-import skillbox.service.impl.PostServiceImpl;
-import skillbox.service.impl.TagServiceImpl;
+import skillbox.service.PostVoteService;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -24,6 +23,7 @@ import java.text.ParseException;
 public class ApiPostController {
 
     private final PostService postService;
+    private final PostVoteService postVoteService;
 
     @GetMapping()
     public ResponseEntity<PostDto> getPost(@RequestParam(required = false, defaultValue = "0") int offset,
@@ -81,7 +81,7 @@ public class ApiPostController {
 
     @PostMapping()
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
-    public ResponseEntity<WrapperResponse> publicPost(@RequestBody PostRequest postRequest,
+    public ResponseEntity<WrapperResponse> publicPost(@RequestBody skillbox.dto.post.PostRequest postRequest,
                                                       Principal principal) {
         return new ResponseEntity<>(postService.insertPost(postRequest, principal), HttpStatus.OK);
     }
@@ -90,8 +90,25 @@ public class ApiPostController {
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
     public ResponseEntity<WrapperResponse> editPost(
             @PathVariable("id") int postId,
-            @RequestBody PostRequest postRequest,
+            @RequestBody skillbox.dto.post.PostRequest postRequest,
             Principal principal) {
         return new ResponseEntity<>(postService.changePost(postId, postRequest, principal), HttpStatus.OK);
     }
+
+    @PostMapping("/like")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<WrapperResponse> likePost(@RequestBody LikeAndModeration postId,
+                                                    Principal principal) {
+        int param = 1;
+        return new ResponseEntity<>(postVoteService.addLike2Post(principal, postId, param), HttpStatus.OK);
+    }
+
+    @PostMapping("/dislike")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<WrapperResponse> dislikePost(@RequestBody LikeAndModeration postId,
+                                                       Principal principal) {
+        int param = - 1;
+        return new ResponseEntity<>(postVoteService.addLike2Post(principal, postId, param), HttpStatus.OK);
+    }
+
 }

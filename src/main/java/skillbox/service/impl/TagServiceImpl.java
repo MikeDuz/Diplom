@@ -2,9 +2,7 @@ package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import skillbox.dto.post.PostRequest;
-import skillbox.dto.tag.TagDTO;
-import skillbox.entity.Post;
+import skillbox.dto.tag.TagDto;
 import skillbox.entity.Tag;
 import skillbox.mapping.TagMapping;
 import skillbox.repository.PostRepository;
@@ -28,7 +26,7 @@ public class TagServiceImpl implements TagService {
     private final Tag2PostRepository tag2PostRepository;
 
     @Override
-    public TagDTO getTag(String query) {
+    public TagDto getTag(String query) {
         double count = (double) posts.count();
         List<TagPostCount> tagCounts = tag2PostRepository.getTagPostCounts();
         double normK = count / tagCounts.get(0).getPostCount();

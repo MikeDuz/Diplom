@@ -1,5 +1,6 @@
 package skillbox.service;
 
+import skillbox.dto.LikeAndModeration;
 import skillbox.dto.WrapperResponse;
 import skillbox.dto.post.PostDto;
 import skillbox.dto.post.PostRequest;
@@ -28,4 +29,6 @@ public interface PostService   {
     WrapperResponse insertPost(PostRequest postRequest, Principal principal);
 
     WrapperResponse changePost(int postId, PostRequest postRequest, Principal principal);
+
+    WrapperResponse moderatePost(LikeAndModeration likeAndMod, Principal prncipal);
 }

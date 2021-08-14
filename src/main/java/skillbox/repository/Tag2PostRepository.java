@@ -38,4 +38,5 @@ public interface Tag2PostRepository extends JpaRepository<Tag2Post, Integer> {
 
     @Query("select count(t.id) from Tag2Post t where t.tagId.name like concat('%', ?1, '%')")
     int countAllByTagIdContains(String tag);
+
 }

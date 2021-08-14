@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import skillbox.entity.Post;
 import skillbox.entity.Tag;
+import skillbox.entity.User;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.entity.projection.PostProjection;
 
@@ -138,7 +139,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "isActive = :active, " +
             "title = :title, " +
             "text = :text, " +
-            "tags = :tags, " +
             "moderationStatus = :modStatus " +
             "where id = :id")
     void updatePostWithModStatus(
@@ -147,7 +147,12 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             @Param("active") boolean isActive,
             @Param("modStatus") ModerationStatus modStatus,
             @Param("title") String title,
-            @Param("tags") Set<Tag> tags,
             @Param("text") String text);
+
+    @Modifying
+    @Transactional
+    @Query("update Post set moderationStatus = ?1, " +
+            "moderatorId = ?2 where id = ?3")
+    void moderatePost(ModerationStatus moderationStatus, User user, int postId );
 
 }

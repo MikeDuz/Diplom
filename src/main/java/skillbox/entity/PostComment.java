@@ -22,11 +22,13 @@ public class PostComment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    @NotNull
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User userId;
     @NotNull
     private LocalDateTime time;
     @NotNull
     private String text;
+
+
+
 }

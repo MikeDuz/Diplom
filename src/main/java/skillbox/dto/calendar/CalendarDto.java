@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class CalendarDTO {
+public class CalendarDto {
 
     List<Integer> years;
     Map<String, Integer> posts;

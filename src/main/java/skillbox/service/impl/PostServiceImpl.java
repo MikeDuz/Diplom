@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import skillbox.dto.LikeAndModeration;
 import skillbox.dto.WrapperResponse;
 import skillbox.dto.post.ErrorResponse;
 import skillbox.dto.post.PostDto;
@@ -15,6 +16,7 @@ import skillbox.dto.post.PostRequest;
 import skillbox.dto.post.SinglePostDto;
 import skillbox.entity.Post;
 import skillbox.entity.Tag;
+import skillbox.entity.Tag2Post;
 import skillbox.entity.User;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.entity.projection.PostProjection;
@@ -32,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -198,21 +201,40 @@ public class PostServiceImpl implements PostService {
             boolean isActive = postRequest.getActive() == 1;
             Post post = postRep.findById(postId).get();
             ModerationStatus modStatus = setModerationStatus(principal, post);
-            insertTagToPost(postRequest, post);
-            Set<Tag> tagSet = post.getTags();
-            System.out.println();
+            analiseTagToPost(postRequest, post);
+            tag2PostRepository.saveAll(getTagsForPost(postRequest, post));
             postRep.updatePostWithModStatus(postId,
                     time,
                     isActive,
                     modStatus,
                     postRequest.getTitle(),
-                    tagSet,
                     postRequest.getText());
         }
         return wrapperResponse;
     }
 
-    private void insertTagToPost(PostRequest postRequest, Post post) {
+    @Override
+    @Transactional
+    public WrapperResponse moderatePost(LikeAndModeration likeAndMod, Principal principal) {
+        User user =  userRep.findByEmail(principal.getName()).get();
+        WrapperResponse wrapResp = new WrapperResponse();
+        if(user.isModerator()) {
+            switch (likeAndMod.getDecision()) {
+                case ("accept") :
+                    postRep.moderatePost(ModerationStatus.ACCEPTED, user, likeAndMod.getPostId());
+                    break;
+                case ("decline") :
+                    postRep.moderatePost(ModerationStatus.DECLINED, user, likeAndMod.getPostId());
+            }
+            wrapResp.setResult(true);
+            return wrapResp;
+        }
+        wrapResp.setResult(false);
+        return wrapResp;
+    }
+
+
+    private void analiseTagToPost(PostRequest postRequest, Post post) {
         post.getTags().forEach(t -> {
             if (!postRequest.getTags().contains(t.getName())) {
                 post.getTags().remove(t);
@@ -325,9 +347,15 @@ public class PostServiceImpl implements PostService {
         return PostMapping.postMapping(posts, inactivePosts);
     }
 
-    private void getTagsForPost(PostRequest postRequest, Post post) {
-        postRequest.getTags()
-                .forEach(a -> tagMapper(a, post));
+    private Set<Tag2Post> getTagsForPost(PostRequest postRequest, Post post) {
+        Set<Tag2Post> tag2Posts = new HashSet<>();
+        postRequest.getTags().forEach(s -> {
+            Tag2Post tag2Post = new Tag2Post();
+            tag2Post.setPostId(post);
+            tag2Post.setTagId(tagMapper(s, post));
+            tag2Posts.add(tag2Post);
+        });
+        return tag2Posts;
     }
 
     private Tag tagMapper(String name, Post post) {

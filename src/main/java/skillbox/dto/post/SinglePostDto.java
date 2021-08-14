@@ -12,6 +12,7 @@ import java.util.Set;
 @Builder
 public class SinglePostDto {
 
+    @JsonProperty("id")
     int id;
     @JsonProperty("timestamp")
     long timestamp;

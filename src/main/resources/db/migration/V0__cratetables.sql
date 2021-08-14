@@ -6,7 +6,7 @@ time timestamp not null
 ) engine=InnoDB;
 create table global_settings (
 id integer primary key auto_increment not null,
-code enum('MULTIUSER_MODE','POST_PREMODERATION','STATISTICS_IN_PUBLIC') not null,
+code enum('MULTIUSER_MODE','POST_PREMODERATION','STATISTICS_IS_PUBLIC') not null,
 name varchar(255) not null,
 value enum('YES','NO') not null
 ) engine=InnoDB;
