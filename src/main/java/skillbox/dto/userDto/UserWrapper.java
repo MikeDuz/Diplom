@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegisterResponse {
+public class UserWrapper {
 
     boolean result;
-    BadRegister errors;
+    Object user;
+
 }

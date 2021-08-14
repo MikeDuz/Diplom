@@ -3,18 +3,24 @@ package skillbox.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import skillbox.dto.calendar.CalendarDTO;
-import skillbox.dto.globalSettig.GlobalSettingDTO;
-import skillbox.dto.init.InitDTO;
-import skillbox.dto.tag.TagDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import skillbox.dto.LikeAndModeration;
+import skillbox.dto.WrapperResponse;
+import skillbox.dto.calendar.CalendarDto;
+import skillbox.dto.comment.CommentDto;
+import skillbox.dto.globalSettig.GlobalSettingDto;
+import skillbox.dto.init.InitDto;
+import skillbox.dto.tag.TagDto;
+import skillbox.service.CommentService;
+import skillbox.service.GlobalSettingService;
+import skillbox.service.PostService;
+import skillbox.service.TagService;
 import skillbox.service.impl.CalendarService;
 import skillbox.service.impl.InitService;
-import skillbox.service.impl.SettingsService;
-import skillbox.service.impl.TagService;
+
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/")
@@ -22,28 +28,52 @@ import skillbox.service.impl.TagService;
 public class ApiGeneralController {
 
     private final InitService initResponse;
-    private final SettingsService settingsService;
+    private final GlobalSettingService settingsService;
     private final TagService tagService;
     private final CalendarService calendarService;
+    private final PostService postService;
+    private final CommentService commService;
+
 
     @GetMapping("init")
-    public ResponseEntity<InitDTO> init() {
+    public ResponseEntity<InitDto> init() {
         return new ResponseEntity<>(initResponse.getInit(), HttpStatus.OK);
     }
 
     @GetMapping("settings")
-    public ResponseEntity<GlobalSettingDTO> settings() {
+    public ResponseEntity<GlobalSettingDto> settings() {
         return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
     }
 
     @GetMapping("tag")
-    public ResponseEntity<TagDTO> tag(@RequestParam(defaultValue = "all") String query) {
+    public ResponseEntity<TagDto> tag(@RequestParam(defaultValue = "all") String query) {
         return new ResponseEntity<>(tagService.getTag(query), HttpStatus.OK);
     }
 
     @GetMapping("calendar")
-    public ResponseEntity<CalendarDTO> calendar(@RequestParam(defaultValue = "0") int year) {
+    public ResponseEntity<CalendarDto> calendar(@RequestParam(defaultValue = "0") int year) {
         return new ResponseEntity<>(calendarService.getCalendar(year), HttpStatus.OK);
+    }
+
+    @PutMapping("settings")
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public void changeSettings(@RequestBody GlobalSettingDto globalSettings,
+                               Principal principal) {
+        settingsService.setGlobalSetting(globalSettings, principal);
+    }
+
+    @PostMapping("moderation")
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public ResponseEntity<WrapperResponse> moderatePost(@RequestBody LikeAndModeration likeAndMod,
+                                                        Principal principal) {
+        return new ResponseEntity<>(postService.moderatePost(likeAndMod, principal), HttpStatus.OK);
+    }
+
+    @PostMapping("comment")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<WrapperResponse> insertComment(@RequestBody CommentDto comment,
+                                          Principal principal) {
+        return new ResponseEntity<>(commService.insertComment(comment, principal), HttpStatus.OK);
     }
 
 }

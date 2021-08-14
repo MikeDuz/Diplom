@@ -1,10 +1,8 @@
 package skillbox.service.impl;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import skillbox.dto.init.InitDTO;
+import skillbox.dto.init.InitDto;
 
 @Service
 public class InitService {
@@ -22,7 +20,7 @@ public class InitService {
     @Value("${blog.copyrightFrom}")
     private String copyrightFrom;
 
-    public InitDTO getInit() {
-         return new InitDTO(title, subtitle, telegram, email, copyright, copyrightFrom);
+    public InitDto getInit() {
+         return new InitDto(title, subtitle, telegram, email, copyright, copyrightFrom);
     }
 }

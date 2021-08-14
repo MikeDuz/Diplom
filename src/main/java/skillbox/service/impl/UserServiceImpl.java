@@ -9,11 +9,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import skillbox.dto.DtoWrapper;
+import skillbox.dto.userDto.UserWrapper;
 import skillbox.dto.userDto.LogRequest;
 import skillbox.dto.userDto.BadRegister;
 import skillbox.dto.userDto.RegisterDto;
-import skillbox.dto.userDto.RegisterResponse;
+import skillbox.dto.WrapperResponse;
 import skillbox.entity.CaptchaCodes;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.mapping.UserMapper;
@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public RegisterResponse regUser(RegisterDto regUser) {
-        RegisterResponse response = new RegisterResponse();
+    public WrapperResponse regUser(RegisterDto regUser) {
+        WrapperResponse response = new WrapperResponse();
         BadRegister badRequest = new BadRegister();
         if (userRep.existsByEmail(regUser.getEmail())) {
             response.setResult(false);
@@ -73,20 +73,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DtoWrapper loginResponse(LogRequest logRequest) {
+    public UserWrapper loginResponse(LogRequest logRequest) {
         Authentication auth = authManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         logRequest.getEmail(),
                         logRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user = (User) auth.getPrincipal();
-        DtoWrapper dtoWrap = new DtoWrapper();
+        UserWrapper dtoWrap = new UserWrapper();
         return getDtoWrapper(user.getUsername(), dtoWrap);
     }
 
     @Override
-    public DtoWrapper getAuthCheck(Principal principal) {
-        DtoWrapper dtoWrap = new DtoWrapper();
+    public UserWrapper getAuthCheck(Principal principal) {
+        UserWrapper dtoWrap = new UserWrapper();
         if(principal == null) {
            dtoWrap.setResult(false);
            return dtoWrap;
@@ -95,13 +95,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DtoWrapper logoutResponse() {
-        DtoWrapper dtoWrap = new DtoWrapper();
+    public UserWrapper logoutResponse() {
+        UserWrapper dtoWrap = new UserWrapper();
         dtoWrap.setResult(true);
         return dtoWrap;
     }
 
-    private DtoWrapper getDtoWrapper(String email, DtoWrapper dtoWrap) {
+    private UserWrapper getDtoWrapper(String email, UserWrapper dtoWrap) {
         skillbox.entity.User userEntity = userRep
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));

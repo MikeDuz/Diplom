@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class GlobalSettingDTO {
+public class GlobalSettingDto {
 
     @JsonProperty("MULTIUSER_MODE")
     private boolean multiuserMode;
