@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import skillbox.dto.LikeAndModeration;
 import skillbox.dto.WrapperResponse;
 import skillbox.dto.calendar.CalendarDto;
@@ -76,4 +77,9 @@ public class ApiGeneralController {
         return new ResponseEntity<>(commService.insertComment(comment, principal), HttpStatus.OK);
     }
 
+    @PostMapping("image")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<String> getImage(@RequestParam("file") MultipartFile image) {
+        return null;
+    }
 }

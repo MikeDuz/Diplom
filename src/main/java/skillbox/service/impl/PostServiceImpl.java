@@ -1,6 +1,7 @@
 package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -53,7 +54,8 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRep;
 
     public static int TITLE_LENGTH = 3;
-    public static int TEXT_LENGTH = 50;
+    @Value("${blog.postLenth}")
+    public static int TEXT_LENGTH;
     public static String DEFAULT_MODE = "recent";
 
     @Override

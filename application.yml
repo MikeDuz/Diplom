@@ -29,4 +29,12 @@ blog:
   liveTimeCaptcha: 1200000
   postLenth: 50
   commentLength: 3
+  minFileSize: 1000
+  imageMaxLenght: 100
+google:
+  secretKey: \credential\client_secret.json
+  callbackUri: http://localhost:8080
+  credentialFolder: file:\credential
+  serviceAccountKey: classpath:credential\service.json
+
 
