@@ -1,40 +1,37 @@
 package skillbox.view;
 
+
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 
 public class ImageResize  {
 
-    @Value("${blog.imageMaxLenght}")
-    private static int sideMaxLenght;
 
-    public static  BufferedImage picResize(MultipartFile picture) throws  Exception{
-        BufferedImage image = ImageIO.read((InputStream) picture);
+
+    public static  BufferedImage picResize(MultipartFile picture, int sideMaxLength) throws  Exception{
+        BufferedImage image = ImageIO.read(picture.getInputStream());
+        Scalr.Mode mode = Scalr.Mode.AUTOMATIC;
         BufferedImage finishImage = null;
         int width = image.getWidth();
         int height = image.getHeight();
-        if(width <= sideMaxLenght && height <= sideMaxLenght) {
+        if(width <= sideMaxLength && height <= sideMaxLength) {
             return image;
         }
         if(width >= height) {
-            finishImage = Scalr.resize(image,
-                    Scalr.Method.BALANCED,
-                    Scalr.Mode.FIT_TO_WIDTH,
-                    sideMaxLenght,
-                    Scalr.OP_ANTIALIAS);
+            mode = Scalr.Mode.FIT_TO_WIDTH;
         } else {
-            finishImage = Scalr.resize(image,
-                    Scalr.Method.BALANCED,
-                    Scalr.Mode.FIT_TO_HEIGHT,
-                    sideMaxLenght,
-                    Scalr.OP_ANTIALIAS);
+            mode = Scalr.Mode.FIT_TO_HEIGHT;
         }
+        finishImage = Scalr.resize(image,
+                Scalr.Method.BALANCED,
+                mode,
+                sideMaxLength,
+                Scalr.OP_ANTIALIAS);
         return finishImage;
     }
 }

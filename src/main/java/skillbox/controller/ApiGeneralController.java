@@ -13,10 +13,7 @@ import skillbox.dto.comment.CommentDto;
 import skillbox.dto.globalSettig.GlobalSettingDto;
 import skillbox.dto.init.InitDto;
 import skillbox.dto.tag.TagDto;
-import skillbox.service.CommentService;
-import skillbox.service.GlobalSettingService;
-import skillbox.service.PostService;
-import skillbox.service.TagService;
+import skillbox.service.*;
 import skillbox.service.impl.CalendarService;
 import skillbox.service.impl.InitService;
 
@@ -34,6 +31,7 @@ public class ApiGeneralController {
     private final CalendarService calendarService;
     private final PostService postService;
     private final CommentService commService;
+    private final ImageService imageService;
 
 
     @GetMapping("init")
@@ -79,7 +77,8 @@ public class ApiGeneralController {
 
     @PostMapping("image")
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
-    public ResponseEntity<String> getImage(@RequestParam("file") MultipartFile image) {
+    public ResponseEntity<String> getImage(@RequestParam("image") MultipartFile image) throws Exception {
+        imageService.imageTreatment(image);
         return null;
     }
 }

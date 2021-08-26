@@ -12,6 +12,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,7 @@ public class GoogleDriveManager {
 
     private static final String APPLICATION_NAME = "Google drive storage";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private static final String TOKENS_DIRECTORY_PATH = "src/main/resources/tokens";
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
     @Value("${google.secretKey}")
     private  String credentialsFilePath;
@@ -65,9 +67,66 @@ public class GoogleDriveManager {
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
                 .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setHost("127.0.0.1").setPort(8089).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8000).build();
 
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    }
+
+    private String searchFolderId(String folderName, Drive service) throws Exception {
+        return searchFolderId(null, folderName, service);
+    }
+
+    private String searchFolderId(String parentId, String folderName, Drive service) throws Exception {
+        String folderId = null;
+        String pageToken = null;
+        FileList result = null;
+
+        File fileMetadata = new File();
+        fileMetadata.setMimeType("application/vnd.google-apps.folder");
+        fileMetadata.setName(folderName);
+
+        do {
+            String query = " mimeType = 'application/vnd.google-apps.folder' ";
+            if (parentId == null) {
+                query = query + " and 'root' in parents";
+            } else {
+                query = query + " and '" + parentId + "' in parents";
+            }
+            result = service.files().list().setQ(query)
+                    .setSpaces("drive")
+                    .setFields("nextPageToken, files(id, name)")
+                    .setPageToken(pageToken)
+                    .execute();
+
+            for (File file : result.getFiles()) {
+                if (file.getName().equalsIgnoreCase(folderName)) {
+                    folderId = file.getId();
+                }
+            }
+            pageToken = result.getNextPageToken();
+        } while (pageToken != null && folderId == null);
+
+        return folderId;
+    }
+
+    public String findOrCreateFolder(String parentId, String folderName, Drive driveInstance) throws Exception {
+        String folderId = searchFolderId(parentId, folderName, driveInstance);
+        // Folder already exists, so return id
+        if (folderId != null) {
+            return folderId;
+        }
+        //Folder dont exists, create it and return folderId
+        File fileMetadata = new File();
+        fileMetadata.setMimeType("application/vnd.google-apps.folder");
+        fileMetadata.setName(folderName);
+
+        if (parentId != null) {
+            fileMetadata.setParents(Collections.singletonList(parentId));
+        }
+        return driveInstance.files().create(fileMetadata)
+                .setFields("id")
+                .execute()
+                .getId();
     }
 
 }

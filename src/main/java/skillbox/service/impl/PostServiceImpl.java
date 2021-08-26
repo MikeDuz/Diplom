@@ -54,7 +54,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRep;
 
     public static int TITLE_LENGTH = 3;
-    @Value("${blog.postLenth}")
+    @Value("${blog.postLength}")
     public static int TEXT_LENGTH;
     public static String DEFAULT_MODE = "recent";
 
