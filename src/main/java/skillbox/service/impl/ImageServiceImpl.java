@@ -10,6 +10,7 @@ import skillbox.service.ImageService;
 import skillbox.view.ImageResize;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +28,12 @@ public class ImageServiceImpl implements ImageService {
     public String imageTreatment(MultipartFile file) throws Exception {
         if (fileCheck(file)) {
             String originName = file.getOriginalFilename();
+            String fileType = file.getContentType();
             BufferedImage image = ImageResize.picResize(file, imageMaxLength);
             Drive driveInstance = driveManager.getInstance();
             String imageFolderId = folderCheck(driveInstance);
+            String imageFilePath = setFilePath(driveManager.uploadFile(image, imageFolderId, file.getName(), fileType));
+            return imageFilePath;
         }
         return null;
     }
@@ -62,6 +66,14 @@ public class ImageServiceImpl implements ImageService {
         String nameSecond = name.substring(namePartLength + 1, namePartLength * 2);
         String nameThird = name.substring(namePartLength * 2 + 1);
         nameArray = new String[] {nameFirst, nameSecond, nameThird};
+    }
+
+    private String setFilePath(String fileId) {
+        return "/" + parentFolderName +
+                "/" + nameArray[0] +
+                "/" + nameArray[1] +
+                "/" + nameArray[2] +
+                "/" + fileId;
     }
 
 }

@@ -79,6 +79,6 @@ public class ApiGeneralController {
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
     public ResponseEntity<String> getImage(@RequestParam("image") MultipartFile image) throws Exception {
         imageService.imageTreatment(image);
-        return null;
+        return new ResponseEntity<>(imageService.imageTreatment(image), HttpStatus.OK);
     }
 }

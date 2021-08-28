@@ -6,6 +6,8 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.FileContent;
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -17,11 +19,13 @@ import com.google.api.services.drive.model.FileList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
@@ -127,6 +131,34 @@ public class GoogleDriveManager {
                 .setFields("id")
                 .execute()
                 .getId();
+    }
+
+    // FileManager.java
+    public String uploadFile(BufferedImage image, String folderId, String fileName, String fileType) {
+        try {
+                File fileMetadata = new File();
+                fileMetadata.setParents(Collections.singletonList(folderId));
+                fileMetadata.setOriginalFilename(fileName);
+                File uploadFile = getInstance()
+                        .files()
+                        .create(fileMetadata, new InputStreamContent(fileType,
+                                new ByteArrayInputStream(bufferedImageToByteArray(image))))
+                        .setFields("id").execute();
+                return uploadFile.getId();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    private byte[] bufferedImageToByteArray(
+            BufferedImage bufferedImage) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpg", baos);
+        baos.flush();
+        byte[] imageInByte = baos.toByteArray();
+        baos.close();
+        return imageInByte;
     }
 
 }
