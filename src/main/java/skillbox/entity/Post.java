@@ -62,4 +62,13 @@ public class Post {
     public void addTags(Tag tag) {
         tags.add(tag);
     }
+
+    public static boolean postPublic(Post post) {
+        if (post.isActive() &&
+                post.getModerationStatus().equals(ModerationStatus.ACCEPTED) &&
+                post.getTime().isBefore(LocalDateTime.now())) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,5 +1,6 @@
 package skillbox.service;
 
+import skillbox.dto.userDto.RestoreDto;
 import skillbox.dto.userDto.UserWrapper;
 import skillbox.dto.userDto.LogRequest;
 import skillbox.dto.userDto.RegisterDto;
@@ -16,6 +17,8 @@ public interface UserService  {
     UserWrapper getAuthCheck(Principal principal);
 
     UserWrapper logoutResponse();
+
+    WrapperResponse restorePass(RestoreDto email);
 
 
 }

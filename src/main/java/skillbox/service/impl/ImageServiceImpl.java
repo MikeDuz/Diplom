@@ -19,7 +19,7 @@ public class ImageServiceImpl implements ImageService {
     @Value("${blog.minFileSize}")
     private long minFileSize;
     @Value("${blog.maxLength}")
-    private  int imageMaxLength;
+    private int imageMaxLength;
     private String parentFolderName = "upload";
     private final GoogleDriveManager driveManager;
     private String[] nameArray;
@@ -65,15 +65,16 @@ public class ImageServiceImpl implements ImageService {
         String nameFirst = name.substring(0, namePartLength);
         String nameSecond = name.substring(namePartLength + 1, namePartLength * 2);
         String nameThird = name.substring(namePartLength * 2 + 1);
-        nameArray = new String[] {nameFirst, nameSecond, nameThird};
+        nameArray = new String[]{nameFirst, nameSecond, nameThird};
     }
 
     private String setFilePath(String fileId) {
-        return "/" + parentFolderName +
-                "/" + nameArray[0] +
-                "/" + nameArray[1] +
-                "/" + nameArray[2] +
-                "/" + fileId;
+        return "https://www.googleapis.com/drive/v3/files/"
+//                "/" + parentFolderName +
+//                "/" + nameArray[0] +
+//                "/" + nameArray[1] +
+//                "/" + nameArray[2] +
+                + fileId;
     }
 
 }

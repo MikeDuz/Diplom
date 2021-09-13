@@ -32,6 +32,14 @@ blog:
   commentLength: 3
   minFileSize: 1000
   maxLength: 100
+  baseURL: ${baseURL}
+spring.mail:
+  host: smtp.mail.ru
+  port: 465
+  username: ${USER_NAME}
+  password: ${PASSWORD}
+  properties.mail.smtp.auth: true
+  properties.mail.smtp.starttls.enable: true
 google:
   secretKey: /credential/client_secret.json
   callbackUri: http://localhost:8080

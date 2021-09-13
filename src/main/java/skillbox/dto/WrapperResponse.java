@@ -13,6 +13,6 @@ public class WrapperResponse {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Object errors;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    int id;
+    Integer id;
 
 }

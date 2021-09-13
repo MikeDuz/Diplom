@@ -78,7 +78,29 @@ public class ApiGeneralController {
     @PostMapping("image")
     @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
     public ResponseEntity<String> getImage(@RequestParam("image") MultipartFile image) throws Exception {
-        imageService.imageTreatment(image);
         return new ResponseEntity<>(imageService.imageTreatment(image), HttpStatus.OK);
     }
+
+    @PostMapping("profile/my")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<String> editProfile() {
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping("statistics/my")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<String> myStatistic() {
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping("statistics/all")
+    @PreAuthorize("hasAnyAuthority('user:write', 'user:moderate')")
+    public ResponseEntity<String> generalStatistic() {
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+
+
+
+
 }

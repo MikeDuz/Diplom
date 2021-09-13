@@ -9,6 +9,7 @@ import skillbox.dto.userDto.LogRequest;
 import skillbox.dto.captcha.CaptchaDto;
 import skillbox.dto.userDto.RegisterDto;
 import skillbox.dto.WrapperResponse;
+import skillbox.dto.userDto.RestoreDto;
 import skillbox.service.UserService;
 import skillbox.service.impl.CaptchaService;
 
@@ -47,5 +48,16 @@ public class ApiAuthController {
     public ResponseEntity<UserWrapper> logout() {
         return new ResponseEntity<>(userService.logoutResponse(), HttpStatus.OK);
     }
+
+//    @GetMapping("password")
+//    public ResponseEntity<String> changePassword() {
+//        return new ResponseEntity<>(null, HttpStatus.OK);
+//    }
+
+    @PostMapping("restore")
+    public ResponseEntity<WrapperResponse> restorePassword(@RequestBody RestoreDto email) {
+        return new ResponseEntity<>(userService.restorePass(email), HttpStatus.OK);
+    }
+
 
 }

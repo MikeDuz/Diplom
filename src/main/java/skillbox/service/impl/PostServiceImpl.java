@@ -25,7 +25,6 @@ import skillbox.mapping.ModerationStatusMapping;
 import skillbox.mapping.PostMapping;
 import skillbox.repository.*;
 import skillbox.service.PostService;
-import skillbox.util.PostPublic;
 import skillbox.util.SetLimit;
 import skillbox.util.SetPageNumber;
 
@@ -113,7 +112,7 @@ public class PostServiceImpl implements PostService {
     public SinglePostDto searchPostById(int postId) {
         Post post = postRep.findPostById(postId);
         SinglePostDto postDTO = SinglePostDto.builder().build();
-        if (!PostPublic.postPublic(post)) {
+        if (!Post.postPublic(post)) {
             return postDTO;
         }
         postRep.incrViewCount(postId);

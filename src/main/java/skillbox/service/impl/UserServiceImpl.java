@@ -1,6 +1,10 @@
 package skillbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,11 +13,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import skillbox.dto.userDto.UserWrapper;
-import skillbox.dto.userDto.LogRequest;
-import skillbox.dto.userDto.BadRegister;
-import skillbox.dto.userDto.RegisterDto;
 import skillbox.dto.WrapperResponse;
+import skillbox.dto.userDto.*;
 import skillbox.entity.CaptchaCodes;
 import skillbox.entity.enums.ModerationStatus;
 import skillbox.mapping.UserMapper;
@@ -22,7 +23,12 @@ import skillbox.repository.PostRepository;
 import skillbox.repository.UserRepository;
 import skillbox.service.UserService;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.security.Principal;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +38,13 @@ public class UserServiceImpl implements UserService {
     private final CaptchaRepository capRep;
     private final AuthenticationManager authManager;
     private final PostRepository postRep;
+
+    private final SecureRandom secureRandom = new SecureRandom();
+    private final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
+
+    @Value("${blog.baseURL}")
+    public static String BASEURL;
+    private final JavaMailSender emailSender;
 
     @Override
     @Transactional
@@ -87,9 +100,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserWrapper getAuthCheck(Principal principal) {
         UserWrapper dtoWrap = new UserWrapper();
-        if(principal == null) {
-           dtoWrap.setResult(false);
-           return dtoWrap;
+        if (principal == null) {
+            dtoWrap.setResult(false);
+            return dtoWrap;
         }
         return getDtoWrapper(principal.getName(), dtoWrap);
     }
@@ -101,12 +114,33 @@ public class UserServiceImpl implements UserService {
         return dtoWrap;
     }
 
+    @Override
+    public WrapperResponse restorePass(RestoreDto email)  {
+        WrapperResponse response = new WrapperResponse();
+        try {
+            Optional<skillbox.entity.User> userOptional = userRep.findByEmail(email.getEmail());
+            if (userOptional == null) {
+                response.setResult(false);
+                return response;
+            }
+            String token = generateNewToken();
+            skillbox.entity.User user = userOptional.get();
+            userRep.setCode(token, user.getId());
+            sendEmail(user.getEmail(), token);
+            response.setResult(true);
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
+        return response;
+    }
+
+
     private UserWrapper getDtoWrapper(String email, UserWrapper dtoWrap) {
         skillbox.entity.User userEntity = userRep
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
         int count = postRep.countAllByModerationStatusAndActive(email, true, ModerationStatus.NEW);
-        if(!userEntity.isModerator()) {
+        if (!userEntity.isModerator()) {
             return UserMapper.mapUserToResponse(dtoWrap, userEntity, count, false);
         }
         count = getPostCount(ModerationStatus.NEW);
@@ -114,9 +148,31 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     private int getPostCount(ModerationStatus modStatus) {
         return postRep.countAllByModerationStatus(modStatus);
+    }
+
+
+    private String generateNewToken() {
+        byte[] randomBytes = new byte[24];
+        secureRandom.nextBytes(randomBytes);
+        return base64Encoder.encodeToString(randomBytes);
+    }
+
+    private String generateEmailText(String token) {
+        return "<p><a href=\"" + BASEURL + "/login/change-password/" +
+                token + "\">Нажмите на ссылку для восстановления пароля на ресурсе wdbl</a></p>";
+    }
+
+    private void sendEmail(String email, String token) throws MessagingException {
+        MimeMessage htmlMessage = emailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(htmlMessage);
+        message.setFrom("noreply@wdbl.com");
+        message.setTo(email);
+        message.setSubject("Письмо для восстановления пароля на wdbl.herokuapp.com");
+        message.setText(generateEmailText(token), true);
+        emailSender.send(htmlMessage);
+
     }
 
 }
